@@ -5,6 +5,7 @@ using UnityEngine;
 public class AddFling : Pickup
 {
     [SerializeField] private int amountOfFlingsToAdd;
+    
     protected override void OnPickUp(FlingController playerController)
     {
         base.OnPickUp(playerController);

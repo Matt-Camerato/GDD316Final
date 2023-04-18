@@ -14,6 +14,5 @@ public class Pickup : MonoBehaviour
 
     protected virtual void OnPickUp(FlingController playerController)
     {
-        
     }
 }

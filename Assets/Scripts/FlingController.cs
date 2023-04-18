@@ -14,18 +14,17 @@ public class FlingController : MonoBehaviour
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private Rigidbody rb;
 
-    private Transform parent;
-    [SerializeField] private Rigidbody[] _rigidbodies;
-    
-    private Vector3 startPosition;
-    private Vector3 endPosition;
-    private bool isDragging = false;
-    private bool isMoving = false;
-    
+    private Rigidbody[] _rigidbodies;
+
+    private Vector3 _startPosition;
+    private Vector3 _endPosition;
+    private bool _isDragging = false;
+    private bool _isMoving = false;
+
     [SerializeField] private int totalAmountOfFlings;
 
-    [SerializeField] private int _currentFlings;
-    
+    private int _currentFlings;
+
     private void Start()
     {
         _rigidbodies = GetComponentsInChildren<Rigidbody>();
@@ -37,73 +36,66 @@ public class FlingController : MonoBehaviour
         //stop player completely once they are slower than the stop velocity
         if (rb.velocity.magnitude < stopVelocity) StopMoving();
 
-        if (isMoving) return; //don't allow another fling while player is moving
-        if(_currentFlings >= totalAmountOfFlings) return;
-        
+        if (_isMoving) return; //don't allow another fling while player is moving
+        if (_currentFlings >= totalAmountOfFlings) return;
+
         if (Input.GetMouseButtonDown(0))
         {
-            startPosition = rb.transform.position;
-            isDragging = true;
+            _startPosition = rb.transform.position;
+            _isDragging = true;
         }
 
-        if (isDragging)
+        if (_isDragging)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, maxDistance))
-            {
-                endPosition = hit.point;
-            }
-            else endPosition = ray.GetPoint(maxDistance);
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            _endPosition = Physics.Raycast(ray, out var hit, maxDistance) ? hit.point : ray.GetPoint(maxDistance);
 
             //set the positions of the line renderer to form an arc
-            Vector3[] arcPoints = new Vector3[segments + 1];
-            for (int i = 0; i <= segments; i++)
+            var arcPoints = new Vector3[segments + 1];
+            for (var i = 0; i <= segments; i++)
             {
-                float t = (float)i / (float)segments;
-                arcPoints[i] = Vector3.Lerp(startPosition, endPosition, t) + CalculateArcPoint(t);
+                var t = (float)i / (float)segments;
+                arcPoints[i] = Vector3.Lerp(_startPosition, _endPosition, t) + CalculateArcPoint(t);
             }
 
             lineRenderer.positionCount = arcPoints.Length;
             lineRenderer.SetPositions(arcPoints);
         }
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            isDragging = false;
-            isMoving = true;
+        if (!Input.GetMouseButtonUp(0)) return;
+        _isDragging = false;
+        _isMoving = true;
 
-            //calculate direction and distance of fling
-            Vector3 forceDirection = (endPosition - startPosition);
-            float distance = forceDirection.magnitude;
-            forceDirection.Normalize();
+        //calculate direction and distance of fling
+        var forceDirection = _endPosition - _startPosition;
+        var distance = forceDirection.magnitude;
+        forceDirection.Normalize();
 
-            //apply force to rigidbody
-            ApplyForce(forceDirection, distance, forceMultiplier);
+        //apply force to rigidbody
+        ApplyForce(forceDirection, distance, forceMultiplier);
 
 
-            //clear line renderer
-            lineRenderer.positionCount = 0;
-        }
+        //clear line renderer
+        lineRenderer.positionCount = 0;
     }
 
     private void StopMoving()
     {
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        isMoving = false;
+        _isMoving = false;
     }
 
     private Vector3 CalculateArcPoint(float t)
     {
         //calculate height of arc based on the distance between the start and end points
-        float arcHeight = Vector3.Distance(startPosition, endPosition) / 2f;
+        var arcHeight = Vector3.Distance(_startPosition, _endPosition) / 2f;
 
         //calculate the position of the arc point using a quadratic equation
-        Vector3 result = Vector3.zero;
+        var result = Vector3.zero;
         result.y = arcHeight * 4f * t * (1f - t);
-        result.x = arcHeight * (endPosition.x - startPosition.x) * t;
-        result.z = arcHeight * (endPosition.z - startPosition.z) * t;
+        result.x = arcHeight * (_endPosition.x - _startPosition.x) * t;
+        result.z = arcHeight * (_endPosition.z - _startPosition.z) * t;
         return result;
     }
 
@@ -117,7 +109,7 @@ public class FlingController : MonoBehaviour
             force = force.normalized * maxForce;
         }
 
-        Debug.Log(force.magnitude);
+        //Debug.Log(force.magnitude);
         rb.AddForce(force, ForceMode.Impulse);
     }
 
