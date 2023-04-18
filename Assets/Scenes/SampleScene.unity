@@ -1523,6 +1523,9 @@ MonoBehaviour:
   segments: 20
   lineRenderer: {fileID: 2016151759}
   rb: {fileID: 46539502}
+  _rigidbodies: []
+  totalAmountOfFlings: 5
+  _currentFlings: 0
 --- !u!1 &1403643463812402007
 GameObject:
   m_ObjectHideFlags: 0

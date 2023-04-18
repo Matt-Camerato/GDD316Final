@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class FlingController : MonoBehaviour
 {
@@ -10,19 +13,33 @@ public class FlingController : MonoBehaviour
 
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private Rigidbody rb;
+
+    private Transform parent;
+    [SerializeField] private Rigidbody[] _rigidbodies;
     
     private Vector3 startPosition;
     private Vector3 endPosition;
     private bool isDragging = false;
     private bool isMoving = false;
+    
+    [SerializeField] private int totalAmountOfFlings;
+
+    [SerializeField] private int _currentFlings;
+    
+    private void Start()
+    {
+        _rigidbodies = GetComponentsInChildren<Rigidbody>();
+        _currentFlings = 0;
+    }
 
     private void Update()
     {
         //stop player completely once they are slower than the stop velocity
-        if(rb.velocity.magnitude < stopVelocity) StopMoving();
+        if (rb.velocity.magnitude < stopVelocity) StopMoving();
 
-        if(isMoving) return; //don't allow another fling while player is moving
-
+        if (isMoving) return; //don't allow another fling while player is moving
+        if(_currentFlings >= totalAmountOfFlings) return;
+        
         if (Input.GetMouseButtonDown(0))
         {
             startPosition = rb.transform.position;
@@ -46,6 +63,7 @@ public class FlingController : MonoBehaviour
                 float t = (float)i / (float)segments;
                 arcPoints[i] = Vector3.Lerp(startPosition, endPosition, t) + CalculateArcPoint(t);
             }
+
             lineRenderer.positionCount = arcPoints.Length;
             lineRenderer.SetPositions(arcPoints);
         }
@@ -61,10 +79,8 @@ public class FlingController : MonoBehaviour
             forceDirection.Normalize();
 
             //apply force to rigidbody
-            Vector3 force = forceDirection * distance * forceMultiplier;
-            if(force.magnitude > maxForce) force = force.normalized * maxForce;
-            Debug.Log(force.magnitude);
-            rb.AddForce(force, ForceMode.Impulse);
+            ApplyForce(forceDirection, distance, forceMultiplier);
+
 
             //clear line renderer
             lineRenderer.positionCount = 0;
@@ -82,12 +98,39 @@ public class FlingController : MonoBehaviour
     {
         //calculate height of arc based on the distance between the start and end points
         float arcHeight = Vector3.Distance(startPosition, endPosition) / 2f;
- 
+
         //calculate the position of the arc point using a quadratic equation
         Vector3 result = Vector3.zero;
         result.y = arcHeight * 4f * t * (1f - t);
         result.x = arcHeight * (endPosition.x - startPosition.x) * t;
         result.z = arcHeight * (endPosition.z - startPosition.z) * t;
         return result;
+    }
+
+    public void ApplyForce(Vector3 forceDirection, float distance, float forceMultiplier)
+    {
+        //apply force to rigidbody
+        _currentFlings++;
+        var force = forceDirection * (distance * forceMultiplier);
+        if (force.magnitude > maxForce)
+        {
+            force = force.normalized * maxForce;
+        }
+
+        Debug.Log(force.magnitude);
+        rb.AddForce(force, ForceMode.Impulse);
+    }
+
+    public void ChangeGravity()
+    {
+        foreach (var rigidbody in _rigidbodies)
+        {
+            rigidbody.useGravity = false;
+        }
+    }
+
+    public void AddFlings(int flings)
+    {
+        totalAmountOfFlings += flings;
     }
 }
