@@ -8,11 +8,12 @@ public class Pickup : MonoBehaviour
     public virtual void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
-        other.TryGetComponent(out FlingController flingController);
+        other.transform.root.TryGetComponent(out FlingController flingController);
         OnPickUp(flingController);
     }
 
     protected virtual void OnPickUp(FlingController playerController)
     {
+        Destroy(gameObject);
     }
 }

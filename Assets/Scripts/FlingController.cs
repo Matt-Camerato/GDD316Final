@@ -1,7 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class FlingController : MonoBehaviour
 {
@@ -23,11 +23,16 @@ public class FlingController : MonoBehaviour
 
     [SerializeField] private int totalAmountOfFlings;
 
-    private int _currentFlings;
+    [SerializeField] private int _currentFlings;
 
     private void Start()
     {
         _rigidbodies = GetComponentsInChildren<Rigidbody>();
+        foreach (var rigidbody in _rigidbodies)
+        {
+            rigidbody.transform.tag = "Player";
+        }
+        
         _currentFlings = 0;
     }
 
@@ -115,9 +120,21 @@ public class FlingController : MonoBehaviour
 
     public void ChangeGravity()
     {
+        StartCoroutine(GravitySwitch());
+    }
+
+    private IEnumerator GravitySwitch()
+    {
         foreach (var rigidbody in _rigidbodies)
         {
             rigidbody.useGravity = false;
+        }
+        
+        yield return new WaitForSeconds(3);
+        
+        foreach (var rigidbody in _rigidbodies)
+        {
+            rigidbody.useGravity = true;
         }
     }
 

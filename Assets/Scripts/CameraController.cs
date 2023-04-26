@@ -16,7 +16,7 @@ public class CameraController : MonoBehaviour
     {
         //setup offset and angles
         offset = transform.position - target.position;
-        Vector3 angles = transform.eulerAngles;
+        var angles = transform.eulerAngles;
         x = angles.y;
         y = angles.x;
 
@@ -29,19 +29,20 @@ public class CameraController : MonoBehaviour
     private void LateUpdate()
     {
         //rotate around target with right mouse button
-        Quaternion rotation = Quaternion.Euler(y, x, 0);
+        var rotation = Quaternion.Euler(y, x, 0);
         if (Input.GetMouseButton(1))
         {
             x += Input.GetAxis("Mouse X") * xRotSpeed * 0.02f;
             y -= Input.GetAxis("Mouse Y") * yRotSpeed * 0.02f;
             y = ClampAngle(y, -70, 70);
             rotation = Quaternion.Euler(y, x, 0);
-            transform.position = target.position + rotation * offset;
-            transform.LookAt(target.position);
+            var position = target.position;
+            transform.position = position + rotation * offset;
+            transform.LookAt(position);
         }
 
         // Smoothly follow target
-        Vector3 desiredPosition = target.position + rotation * offset;
+        var desiredPosition = target.position + rotation * offset;
         transform.position = Vector3.Lerp(transform.position, desiredPosition, 0.1f);
     }
 
