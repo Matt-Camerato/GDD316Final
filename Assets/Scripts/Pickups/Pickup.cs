@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
+    private protected const string Gravity = "Gravity";
+    private protected const string Kinematics = "Kinematics";
+    
     public virtual void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;

@@ -6,7 +6,7 @@ public class LowGravity : Pickup
 {
     protected override void OnPickUp(FlingController playerController)
     {
-        playerController.ChangeGravity();
+        playerController.ChangeGravity(Gravity);
         base.OnPickUp(playerController);
     }
 }

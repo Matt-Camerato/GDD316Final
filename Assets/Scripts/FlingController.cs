@@ -11,8 +11,9 @@ public class FlingController : MonoBehaviour
     [SerializeField] private float stopVelocity = 0.01f;
     [SerializeField] private int segments = 20;
 
-    [SerializeField] private LineRenderer lineRenderer;
-    [SerializeField] private Rigidbody rb;
+    [SerializeField] private LineRenderer lineRenderer; 
+    
+    public Rigidbody rb;
 
     private Rigidbody[] _rigidbodies;
 
@@ -20,12 +21,13 @@ public class FlingController : MonoBehaviour
     private Vector3 _endPosition;
     private bool _isDragging = false;
     private bool _isMoving = false;
-
+    private const string Gravity = "Gravity";
+    private const string Kinematics = "Kinematics";
     [SerializeField] private int totalAmountOfFlings;
 
     [SerializeField] private int _currentFlings;
 
-    private void Start()
+    private void Awake()
     {
         _rigidbodies = GetComponentsInChildren<Rigidbody>();
         foreach (var rigidbody in _rigidbodies)
@@ -118,26 +120,45 @@ public class FlingController : MonoBehaviour
         rb.AddForce(force, ForceMode.Impulse);
     }
 
-    public void ChangeGravity()
+    public void ChangeGravity(string whatToAffect)
     {
-        StartCoroutine(GravitySwitch());
+        StartCoroutine(GravitySwitch(whatToAffect));
     }
 
-    private IEnumerator GravitySwitch()
+    private IEnumerator GravitySwitch(string whatToAffect)
     {
-        foreach (var rigidbody in _rigidbodies)
-        {
-            rigidbody.useGravity = false;
-        }
-        
+        AffectGravity(whatToAffect, false);
         yield return new WaitForSeconds(3);
-        
-        foreach (var rigidbody in _rigidbodies)
+        AffectGravity(whatToAffect,true);
+    }
+
+    private void AffectGravity(string whatToAffect, bool state)
+    {
+        switch (whatToAffect)
         {
-            rigidbody.useGravity = true;
+            case Gravity:
+                foreach (var rigidbody in _rigidbodies)
+                {
+                    rigidbody.useGravity = state;
+                }
+
+                break;
+            case Kinematics:
+                foreach (var rigidbody in _rigidbodies)
+                {
+                    rigidbody.isKinematic = !state;
+                }
+
+                break;
         }
     }
 
+    public bool CanBeTargeted()
+    {
+        return _isMoving;
+    }
+    
+    
     public void AddFlings(int flings)
     {
         totalAmountOfFlings += flings;
