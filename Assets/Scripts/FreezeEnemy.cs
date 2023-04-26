@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class FreezeEnemy : EnemyController
 {
+    [SerializeField] private float duration;
     protected override void AffectPlayer()
     {
         base.AffectPlayer();
-        PlayerController.ChangeGravity("Kinematics");
+        PlayerController.ChangeGravity("Kinematics", duration);
     }
 }

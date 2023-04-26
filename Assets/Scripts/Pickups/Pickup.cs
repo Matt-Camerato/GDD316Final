@@ -7,15 +7,23 @@ public class Pickup : MonoBehaviour
 {
     private protected const string Gravity = "Gravity";
     private protected const string Kinematics = "Kinematics";
-    
+    private bool _collided;
+
+    private void Start()
+    {
+        _collided = false;
+    }
+
     public virtual void OnTriggerEnter(Collider other)
     {
+        if(_collided) return;
         if (!other.CompareTag("Player")) return;
-        other.transform.root.TryGetComponent(out FlingController flingController);
+        _collided = true;
+        other.transform.root.TryGetComponent(out PickupManager flingController);
         OnPickUp(flingController);
     }
 
-    protected virtual void OnPickUp(FlingController playerController)
+    protected virtual void OnPickUp(PickupManager playerController)
     {
         Destroy(gameObject);
     }

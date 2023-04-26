@@ -74,6 +74,6 @@ public class EnemyController : MonoBehaviour
     
     protected virtual void AffectPlayer()
     {
-        Debug.Log("Sees Player");
+       // Debug.Log("Sees Player");
     }
 }

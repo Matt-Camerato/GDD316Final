@@ -1639,63 +1639,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1001 &243440225857854021
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 243440224805997966, guid: 156e94c06195821468ebb66eee425882, type: 3}
-      propertyPath: m_Name
-      value: Freeze Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 243440224805997973, guid: 156e94c06195821468ebb66eee425882, type: 3}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 243440224805997973, guid: 156e94c06195821468ebb66eee425882, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.96639824
-      objectReference: {fileID: 0}
-    - target: {fileID: 243440224805997973, guid: 156e94c06195821468ebb66eee425882, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.49
-      objectReference: {fileID: 0}
-    - target: {fileID: 243440224805997973, guid: 156e94c06195821468ebb66eee425882, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -12.58
-      objectReference: {fileID: 0}
-    - target: {fileID: 243440224805997973, guid: 156e94c06195821468ebb66eee425882, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 243440224805997973, guid: 156e94c06195821468ebb66eee425882, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 243440224805997973, guid: 156e94c06195821468ebb66eee425882, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 243440224805997973, guid: 156e94c06195821468ebb66eee425882, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 243440224805997973, guid: 156e94c06195821468ebb66eee425882, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 243440224805997973, guid: 156e94c06195821468ebb66eee425882, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 243440224805997973, guid: 156e94c06195821468ebb66eee425882, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 156e94c06195821468ebb66eee425882, type: 3}
 --- !u!4 &543450653173877882
 Transform:
   m_ObjectHideFlags: 0
@@ -1773,6 +1716,7 @@ GameObject:
   m_Component:
   - component: {fileID: 543450653173877882}
   - component: {fileID: 919132148648269505}
+  - component: {fileID: 919132148648269506}
   m_Layer: 8
   m_Name: RagdollPlayer
   m_TagString: PlayerMaster
@@ -1801,6 +1745,19 @@ MonoBehaviour:
   rb: {fileID: 46539502}
   totalAmountOfFlings: 100
   _currentFlings: 0
+--- !u!114 &919132148648269506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148648269504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24976c8b6f2e20049a044b5757c1998d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickupType: 0
 --- !u!1 &1403643463812402007
 GameObject:
   m_ObjectHideFlags: 0

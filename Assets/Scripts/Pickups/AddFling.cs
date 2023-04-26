@@ -6,9 +6,10 @@ public class AddFling : Pickup
 {
     [SerializeField] private int amountOfFlingsToAdd;
     
-    protected override void OnPickUp(FlingController playerController)
+    protected override void OnPickUp(PickupManager playerController)
     {
-        playerController.AddFlings(amountOfFlingsToAdd);
+        playerController.AmountOfFlings = amountOfFlingsToAdd;
+        playerController.AddFlingPickup();
         base.OnPickUp(playerController);
     }
 }

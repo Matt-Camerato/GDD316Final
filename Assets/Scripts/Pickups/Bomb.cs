@@ -6,9 +6,10 @@ public class Bomb : Pickup
 {
     [SerializeField] private float force;
     
-    protected override void OnPickUp(FlingController playerController)
+    protected override void OnPickUp(PickupManager playerController)
     {
-        playerController.ApplyForce(playerController.transform.forward, 2, force);
+        playerController.Force = force;
+        playerController.ChangeCurrentPickup(PickupManager.CurrentPickup.Bomb);
         Destroy(gameObject);
         base.OnPickUp(playerController);
     }

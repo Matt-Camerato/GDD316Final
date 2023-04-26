@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class LowGravity : Pickup
 {
-    protected override void OnPickUp(FlingController playerController)
+    [SerializeField] private float duration;
+    
+    protected override void OnPickUp(PickupManager playerController)
     {
-        playerController.ChangeGravity(Gravity);
+        playerController.Duration = duration;
+        playerController.ChangeCurrentPickup(PickupManager.CurrentPickup.LowGravity);
         base.OnPickUp(playerController);
     }
 }

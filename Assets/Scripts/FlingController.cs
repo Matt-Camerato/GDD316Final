@@ -21,15 +21,19 @@ public class FlingController : MonoBehaviour
     private Vector3 _endPosition;
     private bool _isDragging = false;
     private bool _isMoving = false;
-    private const string Gravity = "Gravity";
+    public const string Gravity = "Gravity";
     private const string Kinematics = "Kinematics";
     [SerializeField] private int totalAmountOfFlings;
 
     [SerializeField] private int _currentFlings;
 
+    private PickupManager _pickupManager;
+    
+
     private void Awake()
     {
         _rigidbodies = GetComponentsInChildren<Rigidbody>();
+        TryGetComponent(out _pickupManager);
         foreach (var rigidbody in _rigidbodies)
         {
             rigidbody.transform.tag = "Player";
@@ -120,15 +124,16 @@ public class FlingController : MonoBehaviour
         rb.AddForce(force, ForceMode.Impulse);
     }
 
-    public void ChangeGravity(string whatToAffect)
+    public void ChangeGravity(string whatToAffect, float duration)
     {
-        StartCoroutine(GravitySwitch(whatToAffect));
+        StartCoroutine(GravitySwitch(whatToAffect, duration));
     }
 
-    private IEnumerator GravitySwitch(string whatToAffect)
+    private IEnumerator GravitySwitch(string whatToAffect, float duration)
     {
         AffectGravity(whatToAffect, false);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(duration);
+        if(whatToAffect == Gravity) _pickupManager.ChangeCurrentPickup(PickupManager.CurrentPickup.None);
         AffectGravity(whatToAffect,true);
     }
 
