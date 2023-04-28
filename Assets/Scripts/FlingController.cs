@@ -5,17 +5,21 @@ using UnityEngine;
 
 public class FlingController : MonoBehaviour
 {
+    [Header("Fling Settings")]
     [SerializeField] private float maxDistance = 10f;
     [SerializeField] private float forceMultiplier = 10f;
     [SerializeField] private float maxForce = 50f;
     [SerializeField] private float stopVelocity = 0.01f;
     [SerializeField] private int segments = 20;
+    [SerializeField] private int numFlings = 5;
 
+    [Header("References")]
     [SerializeField] private LineRenderer lineRenderer; 
     
     public Rigidbody rb;
 
     private Rigidbody[] _rigidbodies;
+    private PickupManager _pickupManager;
 
     private Vector3 _startPosition;
     private Vector3 _endPosition;
@@ -23,12 +27,7 @@ public class FlingController : MonoBehaviour
     private bool _isMoving = false;
     public const string Gravity = "Gravity";
     private const string Kinematics = "Kinematics";
-    [SerializeField] private int totalAmountOfFlings;
-
-    [SerializeField] private int _currentFlings;
-
-    private PickupManager _pickupManager;
-    
+    private int totalNumFlings = 0;
 
     private void Awake()
     {
@@ -38,9 +37,9 @@ public class FlingController : MonoBehaviour
         {
             rigidbody.transform.tag = "Player";
         }
-        
-        _currentFlings = 0;
     }
+
+    private void Start() => HUDManager.Instance.UpdateFlingCount(numFlings);
 
     private void Update()
     {
@@ -48,7 +47,12 @@ public class FlingController : MonoBehaviour
         if (rb.velocity.magnitude < stopVelocity) StopMoving();
 
         if (_isMoving) return; //don't allow another fling while player is moving
-        if (_currentFlings >= totalAmountOfFlings) return;
+
+        if (numFlings <= 0)
+        {
+            //show game over screen
+            return;
+        }
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -74,6 +78,7 @@ public class FlingController : MonoBehaviour
         }
 
         if (!Input.GetMouseButtonUp(0)) return;
+
         _isDragging = false;
         _isMoving = true;
 
@@ -85,9 +90,13 @@ public class FlingController : MonoBehaviour
         //apply force to rigidbody
         ApplyForce(forceDirection, distance, forceMultiplier);
 
-
         //clear line renderer
         lineRenderer.positionCount = 0;
+
+        //update flings
+        numFlings--;
+        totalNumFlings++;
+        HUDManager.Instance.UpdateFlingCount(numFlings);
     }
 
     private void StopMoving()
@@ -113,7 +122,6 @@ public class FlingController : MonoBehaviour
     public void ApplyForce(Vector3 forceDirection, float distance, float forceMultiplier)
     {
         //apply force to rigidbody
-        _currentFlings++;
         var force = forceDirection * (distance * forceMultiplier);
         if (force.magnitude > maxForce)
         {
@@ -166,6 +174,7 @@ public class FlingController : MonoBehaviour
     
     public void AddFlings(int flings)
     {
-        totalAmountOfFlings += flings;
+        numFlings += flings;
+        HUDManager.Instance.UpdateFlingCount(numFlings);
     }
 }

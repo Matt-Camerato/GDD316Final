@@ -12,8 +12,7 @@ public class AddFling : Pickup
     
     protected override void OnPickUp(PickupManager playerController)
     {
-        playerController.AmountOfFlings = amountOfFlingsToAdd;
-        playerController.AddFlingPickup();
+        playerController.AddFlingPickup(amountOfFlingsToAdd);
         base.OnPickUp(playerController);
     }
 }

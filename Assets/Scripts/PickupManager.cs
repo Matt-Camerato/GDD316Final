@@ -50,9 +50,9 @@ public class PickupManager : MonoBehaviour
       ChangeCurrentPickup(CurrentPickup.None);
    }
 
-   public void AddFlingPickup()
+   public void AddFlingPickup(int numFlings)
    {
-      _playerController.AddFlings(AmountOfFlings);
+      _playerController.AddFlings(numFlings);
       ChangeCurrentPickup(CurrentPickup.None);
    }
 
