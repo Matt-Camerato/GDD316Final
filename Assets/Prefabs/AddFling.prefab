@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 728033091799376194}
   - component: {fileID: 6042726980874522304}
   - component: {fileID: 4072308896755727742}
+  - component: {fileID: 6487921834180948925}
   m_Layer: 5
   m_Name: FlingPickup_canvas
   m_TagString: Untagged
@@ -236,6 +237,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6487921834180948925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3586693989036406017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d110013452385f04a879d1a6508917e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4749093481883259084
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,8 +276,8 @@ Transform:
   m_GameObject: {fileID: 4749093481883259084}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.7469487, y: 1.9087844, z: 1.4108396}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7202046219086655732}
   - {fileID: 7560639980228792088}
@@ -297,8 +310,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27b28936d7b9c9b4cb49fa83c492dd60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amountOfFlingsToAdd: 1
-  flingNumText: {fileID: 0}
+  amountOfFlingsToAdd: 5
+  flingNumText: {fileID: 7494193237026881214}
 --- !u!1 &7308414101303563025
 GameObject:
   m_ObjectHideFlags: 0
