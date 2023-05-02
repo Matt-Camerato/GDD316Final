@@ -77,10 +77,9 @@ public class EnemyController : MonoBehaviour
         var ray = new Ray(originPos, transform.forward);
 
         // Create a RaycastHit variable to store information about the hit object
-        RaycastHit hit;
 
         // Cast the ray and check if it hit something
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out var hit))
         {
             // Draw a line from the raycast origin to the hit point
             Debug.DrawLine(originPos, hit.point, Color.green);

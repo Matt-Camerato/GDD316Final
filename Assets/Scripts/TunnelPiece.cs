@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.UI;
 
+[RequireComponent(typeof(NavMeshSurface))]
 public class TunnelPiece : MonoBehaviour
 {
     public int index;

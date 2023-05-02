@@ -33,7 +33,6 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnManager()
     {
         var randomNum = RandomizeInt(0, _enemies.enemies.Length);
-        Debug.Log(randomNum);
         RandomEnemy = _enemies.enemies[randomNum];
         StartCoroutine(Spawn());
     }

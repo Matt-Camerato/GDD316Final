@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 384
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_IgnoreNavMeshAgent: 1
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 2574f03363887974fa690c1cead99d17, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: aeed889c653362049873307a1ea5bfaa, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &3775884317583548353
 GameObject:
@@ -384,6 +384,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Entrance_Large_01
       objectReference: {fileID: 0}
+    - target: {fileID: 165080, guid: 989effbb4735e434cb3444044789c3ac, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 444868, guid: 989effbb4735e434cb3444044789c3ac, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -659,8 +663,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 4.228
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2363284313080957655, guid: 37b8bc688caaa5a44b7dec1fa9ef2d2a, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37b8bc688caaa5a44b7dec1fa9ef2d2a, type: 3}
 --- !u!4 &2481545252203935862 stripped
 Transform:

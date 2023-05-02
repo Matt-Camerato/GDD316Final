@@ -40,12 +40,15 @@ public class FlingController : MonoBehaviour
             rigidbody.transform.AddComponent<ChildCollisions>();
             rigidbody.transform.tag = "Player";
         }
+
+        CanFling = true;
     }
 
     private void Start() => HUDManager.Instance.UpdateFlingCount(numFlings);
 
     private void Update()
     {
+        if(!CanFling) return;
         //stop player completely once they are slower than the stop velocity
         if (rb.velocity.magnitude < stopVelocity) StopMoving();
 
@@ -170,6 +173,7 @@ public class FlingController : MonoBehaviour
                 foreach (var rigidbody in _rigidbodies)
                 {
                     rigidbody.isKinematic = !state;
+                    CanFling = state;
                 }
 
                 break;
@@ -191,6 +195,8 @@ public class FlingController : MonoBehaviour
     private bool JustGotAttacked { get; set; }
 
     private bool BeforeLaunch { get; set; } 
+    
+    private bool CanFling { get; set; }
 
     public bool IsGrounded { get; set; } //Ground check on child colliders
 
