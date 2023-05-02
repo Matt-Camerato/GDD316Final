@@ -2,7 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class EnemyController : MonoBehaviour
 {
     private protected FlingController PlayerController;
@@ -10,13 +14,15 @@ public class EnemyController : MonoBehaviour
     private protected const string Kinematics = "Kinematics";
     private Transform _playerTransform;
     [SerializeField] private bool _affectedPlayer;
-    
+    [HideInInspector] public NavMeshAgent agent;
     private float _distance;
-
+    private float walkRadius = 5;
+    
     [SerializeField] protected float minDistance;
     
-    protected virtual void Start()
+    protected virtual void Awake()
     {
+        TryGetComponent(out agent);
         _affectedPlayer = false;
         GameObject.FindGameObjectWithTag($"Player").transform.root.TryGetComponent(out PlayerController);
         _playerTransform = PlayerController.rb.transform;
@@ -24,10 +30,24 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void Update()
     {
+        var dist = agent.remainingDistance; 
+        if (!float.IsPositiveInfinity(dist) && agent.pathStatus== NavMeshPathStatus.PathComplete && agent.remainingDistance==0)//Arrived.
+        {
+            Wonder();
+        }
+        
         _distance = Vector3.Distance(transform.position, _playerTransform.position);
-        Debug.Log(_distance);
         if(!PlayerInRange()) return;
         CheckForPlayer();
+    }
+    
+    private void Wonder()
+    {
+        var randomDirection = Random.insideUnitSphere * walkRadius;
+        randomDirection += transform.position;
+        NavMesh.SamplePosition(randomDirection, out var hit, walkRadius, 1);
+        var finalPosition = hit.position;
+        agent.destination = finalPosition;
     }
 
     private bool PlayerInRange()

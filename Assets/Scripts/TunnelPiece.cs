@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(EnemySpawner))]
 public class TunnelPiece : MonoBehaviour
 {
     public int index;
