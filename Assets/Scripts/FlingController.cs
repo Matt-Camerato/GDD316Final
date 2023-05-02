@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FlingController : MonoBehaviour
@@ -35,6 +36,7 @@ public class FlingController : MonoBehaviour
         TryGetComponent(out _pickupManager);
         foreach (var rigidbody in _rigidbodies)
         {
+            rigidbody.transform.AddComponent<ChildCollisions>();
             rigidbody.transform.tag = "Player";
         }
     }
@@ -168,9 +170,14 @@ public class FlingController : MonoBehaviour
 
     public bool CanBeTargeted()
     {
-        return _isMoving;
+        return rb.velocity.magnitude >= 1 && !_isDragging && !IsGrounded;
     }
-    
+
+    public bool IsGrounded
+    {
+        get;
+        set;
+    }
     
     public void AddFlings(int flings)
     {

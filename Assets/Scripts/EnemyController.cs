@@ -19,6 +19,8 @@ public class EnemyController : MonoBehaviour
     private float walkRadius = 5;
     
     [SerializeField] protected float minDistance;
+
+    private bool canAttack;
     
     protected virtual void Awake()
     {
@@ -26,8 +28,16 @@ public class EnemyController : MonoBehaviour
         _affectedPlayer = false;
         GameObject.FindGameObjectWithTag($"Player").transform.root.TryGetComponent(out PlayerController);
         _playerTransform = PlayerController.rb.transform;
+        canAttack = false;
+        StartCoroutine(InitialWaitToAttack());
     }
 
+    private IEnumerator InitialWaitToAttack()
+    {
+        yield return new WaitForSeconds(4);
+        canAttack = true;
+    }
+    
     protected virtual void Update()
     {
         var dist = agent.remainingDistance; 
@@ -85,6 +95,8 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator WaitToAffect()
     {
+        if(!canAttack) yield break;
+        if(!PlayerController.CanBeTargeted()) yield break;
         _affectedPlayer = true;
         AffectPlayer();
         yield return new WaitForSeconds(7);

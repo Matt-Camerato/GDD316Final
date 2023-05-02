@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 3488649365513037891}
   - component: {fileID: 3488649365513037888}
   - component: {fileID: 3488649365513037889}
-  - component: {fileID: 3488649365513038014}
-  - component: {fileID: 3488649365513037893}
+  - component: {fileID: -4224835348565363456}
+  - component: {fileID: 1879090207062386940}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Freeze Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -100,22 +100,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3488649365513038014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3488649365513038015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b5a5ed96a94f3c48a3c148659d13106, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _affectedPlayer: 0
-  agent: {fileID: 0}
-  minDistance: 0
---- !u!195 &3488649365513037893
+--- !u!195 &-4224835348565363456
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,7 +118,23 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1
+  m_Height: 2
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1879090207062386940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3488649365513038015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96e37ec75ddbe0d408bd5f22d64279c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _affectedPlayer: 0
+  agent: {fileID: 0}
+  minDistance: 10
+  duration: 6
