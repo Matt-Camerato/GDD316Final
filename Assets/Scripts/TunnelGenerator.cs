@@ -1,11 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class TunnelGenerator : MonoBehaviour
 {
     public static TunnelGenerator Instance;
-    
+    public static event Action GeneratedPiece;
     [Header("Tunnel Settings")]
     [SerializeField] private int renderDistance = 6;
     [SerializeField] private int powerupFrequency = 3;
@@ -45,6 +47,7 @@ public class TunnelGenerator : MonoBehaviour
     private void SpawnPiece(int index)
     {
         //get prefab to spawn
+        GeneratedPiece?.Invoke();
         int prefabIndex = Random.Range(0, tunnelPieces.Count);
         while(lastPieceAdded == prefabIndex) prefabIndex = Random.Range(0, tunnelPieces.Count);
         lastPieceAdded = prefabIndex;

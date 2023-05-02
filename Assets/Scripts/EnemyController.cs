@@ -67,6 +67,7 @@ public class EnemyController : MonoBehaviour
 
     private void CheckForPlayer()
     {
+        if(!PlayerController.CanBeTargeted()) return;
         transform.LookAt(_playerTransform);
 
         // Get the position of the raycast origin
@@ -96,7 +97,6 @@ public class EnemyController : MonoBehaviour
     private IEnumerator WaitToAffect()
     {
         if(!canAttack) yield break;
-        if(!PlayerController.CanBeTargeted()) yield break;
         _affectedPlayer = true;
         AffectPlayer();
         yield return new WaitForSeconds(7);
@@ -106,6 +106,6 @@ public class EnemyController : MonoBehaviour
     
     protected virtual void AffectPlayer()
     {
-       // Debug.Log("Sees Player");
+        StartCoroutine(PlayerController.GotAttacked());
     }
 }

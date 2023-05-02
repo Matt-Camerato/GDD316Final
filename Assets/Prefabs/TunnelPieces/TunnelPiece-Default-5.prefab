@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4954154028203165394}
   - component: {fileID: 5996164367492767329}
   - component: {fileID: -1377161878123322565}
-  - component: {fileID: 1653693327837647769}
   m_Layer: 0
   m_Name: TunnelPiece-Default-5
   m_TagString: Untagged
@@ -112,21 +111,6 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: f47fdd1e8e65d2d498ab8f8fe5ceff13, type: 2}
   m_BuildHeightMesh: 0
---- !u!114 &1653693327837647769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3084403722614764011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6a3242d74de0db409fb3e2a4b75f73e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemy: {fileID: 3488649365513038015, guid: c5d5b69678041e34a91dc8f73a0c6b55, type: 3}
-  timeToSpawn: 7
-  _navMeshData: {fileID: 0}
 --- !u!1 &4852939006304688600
 GameObject:
   m_ObjectHideFlags: 0

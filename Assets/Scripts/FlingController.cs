@@ -6,17 +6,18 @@ using UnityEngine;
 
 public class FlingController : MonoBehaviour
 {
-    [Header("Fling Settings")]
-    [SerializeField] private float maxDistance = 10f;
+    [Header("Fling Settings")] [SerializeField]
+    private float maxDistance = 10f;
+
     [SerializeField] private float forceMultiplier = 10f;
     [SerializeField] private float maxForce = 50f;
     [SerializeField] private float stopVelocity = 0.01f;
     [SerializeField] private int segments = 20;
     [SerializeField] private int numFlings = 5;
 
-    [Header("References")]
-    [SerializeField] private LineRenderer lineRenderer; 
-    
+    [Header("References")] [SerializeField]
+    private LineRenderer lineRenderer;
+
     public Rigidbody rb;
 
     private Rigidbody[] _rigidbodies;
@@ -83,7 +84,7 @@ public class FlingController : MonoBehaviour
 
         _isDragging = false;
         _isMoving = true;
-
+        StartCoroutine(HasLaunched());
         //calculate direction and distance of fling
         var forceDirection = _endPosition - _startPosition;
         var distance = forceDirection.magnitude;
@@ -143,8 +144,15 @@ public class FlingController : MonoBehaviour
     {
         AffectGravity(whatToAffect, false);
         yield return new WaitForSeconds(duration);
-        if(whatToAffect == Gravity) _pickupManager.ChangeCurrentPickup(PickupManager.CurrentPickup.None);
-        AffectGravity(whatToAffect,true);
+        if (whatToAffect == Gravity) _pickupManager.ChangeCurrentPickup(PickupManager.CurrentPickup.None);
+        AffectGravity(whatToAffect, true);
+    }
+
+    private IEnumerator HasLaunched()
+    {
+        BeforeLaunch = true;
+        yield return new WaitForSeconds(3);
+        BeforeLaunch = false;
     }
 
     private void AffectGravity(string whatToAffect, bool state)
@@ -168,17 +176,24 @@ public class FlingController : MonoBehaviour
         }
     }
 
-    public bool CanBeTargeted()
+    public IEnumerator GotAttacked()
     {
-        return rb.velocity.magnitude >= 1 && !_isDragging && !IsGrounded;
+        JustGotAttacked = true;
+        yield return new WaitForSeconds(10);
+        JustGotAttacked = false;
     }
 
-    public bool IsGrounded
+    public bool CanBeTargeted()
     {
-        get;
-        set;
+        return !JustGotAttacked && IsGrounded && !BeforeLaunch;
     }
-    
+
+    private bool JustGotAttacked { get; set; }
+
+    private bool BeforeLaunch { get; set; } 
+
+    public bool IsGrounded { get; set; } //Ground check on child colliders
+
     public void AddFlings(int flings)
     {
         numFlings += flings;

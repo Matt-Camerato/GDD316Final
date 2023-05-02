@@ -11,31 +11,52 @@ public class EnemySpawner : MonoBehaviour
     private GameObject _enemy;
     
     [SerializeField] [Range(4, 20)]private float timeToSpawn;
-    private static bool _isSpawning;
-    [SerializeField] private NavMeshData _navMeshData;
-    private float _randomTime;
+    [SerializeField] private int amountOfEnemiesToSpawn;
     
-    private void Start()
-    {
+    private static bool _isSpawning;
+    private float _randomTime;
+    private int _amountOfEnemiesSpawned;
+    
+   
+    private void OnEnable()
+    {  
         _enemies = Resources.Load<TypeOfEnemy>("Scriptable Objects/Enemies");
         _enemy = _enemies.enemy[(int)Randomize(0, _enemies.enemy.Length)];
         _isSpawning = false;
         _randomTime = Randomize(4, timeToSpawn);
+        TunnelGenerator.GeneratedPiece += SpawnManager;
+    }
+
+    private void OnDisable()
+    {
+        TunnelGenerator.GeneratedPiece -= SpawnManager;
+    }
+
+    private void SpawnManager()
+    {
         StartCoroutine(Spawn());
     }
 
     private IEnumerator Spawn()
     {
-        if (_isSpawning) yield break;
-        _isSpawning = true;
-        var enemy = Instantiate(_enemy);
-        enemy.TryGetComponent(out EnemyController enemyController);
-        enemyController.agent.enabled = false;
-        enemyController.agent.Warp(GetRandomPoint());
-        enemyController.agent.enabled = true;
-        yield return new WaitForSeconds(_randomTime);
-        _randomTime = Randomize(4, timeToSpawn);
-        _isSpawning = false;
+        while (_amountOfEnemiesSpawned <= amountOfEnemiesToSpawn)
+        {
+            if (_isSpawning) yield break;
+            _isSpawning = true;
+            var enemy = Instantiate(_enemy);
+            enemy.TryGetComponent(out EnemyController enemyController);
+            enemyController.agent.enabled = false;
+            enemyController.agent.Warp(GetRandomPoint());
+            enemyController.agent.enabled = true;
+            _amountOfEnemiesSpawned++;
+            yield return new WaitForSeconds(_randomTime);
+            _randomTime = Randomize(4, timeToSpawn);
+            _isSpawning = false;
+            yield return null;
+        }
+
+        _amountOfEnemiesSpawned = 0;
+
         //StartCoroutine(Spawn());
     }
 
@@ -49,7 +70,7 @@ public class EnemySpawner : MonoBehaviour
     {
         var navMeshData = NavMesh.CalculateTriangulation();
  
-        // Pick the first indice of a random triangle in the nav mesh
+        // Pick the first index of a random triangle in the nav mesh
         var t = Random.Range(0, navMeshData.indices.Length-3);
          
         // Select a random point on it

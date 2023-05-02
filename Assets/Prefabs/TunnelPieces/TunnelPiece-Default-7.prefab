@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4286116119148162812}
   - component: {fileID: 1619581243829662452}
   - component: {fileID: -9136663384153127317}
-  - component: {fileID: 3696004111704115009}
   m_Layer: 0
   m_Name: TunnelPiece-Default-7
   m_TagString: Untagged
@@ -117,21 +116,6 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: b86c159e1d7946d499a0fe6f918e994f, type: 2}
   m_BuildHeightMesh: 0
---- !u!114 &3696004111704115009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4258463804196033142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6a3242d74de0db409fb3e2a4b75f73e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemy: {fileID: 3488649365513038015, guid: c5d5b69678041e34a91dc8f73a0c6b55, type: 3}
-  timeToSpawn: 7
-  _navMeshData: {fileID: 0}
 --- !u!1 &6670951211048845438
 GameObject:
   m_ObjectHideFlags: 0
@@ -867,22 +851,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 120114, guid: 323c68ad1928c8847a6bd6ea4a553bc9, type: 3}
   m_PrefabInstance: {fileID: 4258463805587562896}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5278682816081127158
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4258463805587485858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Size: {x: 1, y: 3, z: 1}
-  m_Center: {x: -0.28, y: 1.4, z: 0}
-  m_Area: 1
-  m_AffectedAgents: ffffffff
 --- !u!114 &2054775947823474841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -897,6 +865,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Size: {x: 1, y: 3, z: 1}
   m_Center: {x: -4.63, y: 1.4, z: 0}
+  m_Area: 1
+  m_AffectedAgents: ffffffff
+--- !u!114 &5278682816081127158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4258463805587485858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 1, y: 3, z: 1}
+  m_Center: {x: -0.28, y: 1.4, z: 0}
   m_Area: 1
   m_AffectedAgents: ffffffff
 --- !u!1001 &4258463805631434561
