@@ -7,13 +7,18 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private float xRotSpeed = 250f;
     [SerializeField] private float yRotSpeed = 120f;
-
+    [SerializeField] private float zoomInMin = 25;
+    [SerializeField] private float zoomInMax = 55;
+    
     private Vector3 offset;
     private float x;
     private float y;
-
+    private Camera _camera;
+    
+    
     private void Start()
     {
+        TryGetComponent(out _camera);
         //setup offset and angles
         offset = transform.position - target.position;
         var angles = transform.eulerAngles;
@@ -28,6 +33,14 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
+        if(Input.GetAxis("Mouse ScrollWheel") != 0)
+        {
+            var camFOV = _camera.fieldOfView + -Input.mouseScrollDelta.y * 2;
+
+            var clampedVal = Mathf.Clamp(camFOV, zoomInMin, zoomInMax);
+            _camera.fieldOfView = clampedVal;
+        }
+
         //rotate around target with right mouse button
         var rotation = Quaternion.Euler(y, x, 0);
         if (Input.GetMouseButton(1))
