@@ -22,7 +22,8 @@ public class FlingController : MonoBehaviour
 
     private Rigidbody[] _rigidbodies;
     private PickupManager _pickupManager;
-
+    private EffectManager _effectManager;
+    
     private Vector3 _startPosition;
     private Vector3 _endPosition;
     private bool _isDragging = false;
@@ -34,6 +35,7 @@ public class FlingController : MonoBehaviour
     private void Awake()
     {
         _rigidbodies = GetComponentsInChildren<Rigidbody>();
+        TryGetComponent(out _effectManager);
         TryGetComponent(out _pickupManager);
         foreach (var rigidbody in _rigidbodies)
         {
@@ -146,6 +148,7 @@ public class FlingController : MonoBehaviour
     private IEnumerator GravitySwitch(string whatToAffect, float duration)
     {
         AffectGravity(whatToAffect, false);
+        if(whatToAffect == Kinematics) _effectManager.ShowEffect(EffectManager.Freeze);
         yield return new WaitForSeconds(duration);
         if (whatToAffect == Gravity) _pickupManager.ChangeCurrentPickup(PickupManager.CurrentPickup.None);
         AffectGravity(whatToAffect, true);
