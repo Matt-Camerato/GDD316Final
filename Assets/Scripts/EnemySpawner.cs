@@ -8,22 +8,20 @@ using Random = UnityEngine.Random;
 public class EnemySpawner : MonoBehaviour
 {
     private TypeOfEnemy _enemies;
-    private GameObject _enemy;
-    
-    [SerializeField] [Range(4, 20)]private float timeToSpawn;
+
+    [SerializeField] [Range(4, 20)] private float timeToSpawn;
     [SerializeField] private int amountOfEnemiesToSpawn;
-    
+
     private static bool _isSpawning;
     private float _randomTime;
     private int _amountOfEnemiesSpawned;
+
     
-   
     private void OnEnable()
-    {  
+    {
         _enemies = Resources.Load<TypeOfEnemy>("Scriptable Objects/Enemies");
-        _enemy = _enemies.enemy[(int)Randomize(0, _enemies.enemy.Length)];
         _isSpawning = false;
-        _randomTime = Randomize(4, timeToSpawn);
+        _randomTime = RandomizeFloat(4, timeToSpawn);
         TunnelGenerator.GeneratedPiece += SpawnManager;
     }
 
@@ -34,7 +32,16 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnManager()
     {
+        var randomNum = RandomizeInt(0, _enemies.enemies.Length);
+        Debug.Log(randomNum);
+        RandomEnemy = _enemies.enemies[randomNum];
         StartCoroutine(Spawn());
+    }
+
+    private GameObject RandomEnemy
+    {
+        get;
+        set;
     }
 
     private IEnumerator Spawn()
@@ -43,14 +50,14 @@ public class EnemySpawner : MonoBehaviour
         {
             if (_isSpawning) yield break;
             _isSpawning = true;
-            var enemy = Instantiate(_enemy);
+            var enemy = Instantiate(RandomEnemy);
             enemy.TryGetComponent(out EnemyController enemyController);
             enemyController.agent.enabled = false;
             enemyController.agent.Warp(GetRandomPoint());
             enemyController.agent.enabled = true;
             _amountOfEnemiesSpawned++;
             yield return new WaitForSeconds(_randomTime);
-            _randomTime = Randomize(4, timeToSpawn);
+            _randomTime = RandomizeFloat(4, timeToSpawn);
             _isSpawning = false;
             yield return null;
         }
@@ -60,7 +67,12 @@ public class EnemySpawner : MonoBehaviour
         //StartCoroutine(Spawn());
     }
 
-    private float Randomize(float min, float max)
+    private float RandomizeFloat(float min, float max)
+    {
+        return Random.Range(min, max);
+    }
+    
+    private int RandomizeInt(int min, int max)
     {
         return Random.Range(min, max);
     }

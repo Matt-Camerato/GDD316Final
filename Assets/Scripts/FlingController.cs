@@ -179,13 +179,13 @@ public class FlingController : MonoBehaviour
     public IEnumerator GotAttacked()
     {
         JustGotAttacked = true;
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(5);
         JustGotAttacked = false;
     }
 
     public bool CanBeTargeted()
     {
-        return !JustGotAttacked && IsGrounded && !BeforeLaunch;
+        return !JustGotAttacked && !IsGrounded && !BeforeLaunch;
     }
 
     private bool JustGotAttacked { get; set; }

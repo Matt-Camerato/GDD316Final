@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu]
 public class TypeOfEnemy : ScriptableObject
 {
-    public GameObject[] enemy;
+    public GameObject[] enemies;
 }
