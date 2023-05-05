@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThrowableBomb : MonoBehaviour
+public class ThrowableBomb : ThrowableCollider
 {
-    // Start is called before the first frame update
-    void Start()
+    public float force;
+    
+    protected internal override void AffectPlayer(FlingController flingController)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        flingController.ApplyForce(-flingController.rb.transform.forward, 2, force);
+        base.AffectPlayer(flingController);
     }
 }

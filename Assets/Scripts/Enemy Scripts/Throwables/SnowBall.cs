@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SnowBall : MonoBehaviour
+public class SnowBall : ThrowableCollider
 {
-    // Start is called before the first frame update
-    void Start()
+    [HideInInspector] public float duration;
+    
+    protected internal override void AffectPlayer(FlingController flingController)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        flingController.ChangeGravity("Kinematics", duration);
+        Debug.Log("Snow Ball");
+        base.AffectPlayer(flingController);
     }
 }

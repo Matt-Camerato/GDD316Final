@@ -26,6 +26,11 @@ public class TunnelGenerator : MonoBehaviour
 
     private void Start()
     {
+        if (PlayerPrefs.HasKey("FirstSpawn"))
+        {
+            PlayerPrefs.DeleteKey("FirstSpawn");
+        }
+        PlayerPrefs.SetInt("FirstSpawn", 0);
         //spawn pieces in front of player within their render distance
         for(int i = 1; i <= renderDistance; i++) SpawnPiece(i);
     }
@@ -46,6 +51,9 @@ public class TunnelGenerator : MonoBehaviour
 
     private void SpawnPiece(int index)
     {
+        var firstSpawn = PlayerPrefs.GetInt("FirstSpawn");
+        firstSpawn++;
+        PlayerPrefs.SetInt("FirstSpawn", firstSpawn);
         //get prefab to spawn
         GeneratedPiece?.Invoke();
         int prefabIndex = Random.Range(0, tunnelPieces.Count);

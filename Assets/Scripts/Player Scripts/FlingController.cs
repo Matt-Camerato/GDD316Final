@@ -11,7 +11,7 @@ public class FlingController : MonoBehaviour
 
     [SerializeField] private float forceMultiplier = 10f;
     [SerializeField] private float maxForce = 50f;
-    [SerializeField] private float stopVelocity = 0.01f;
+    [SerializeField] private float stopVelocity = 0.02f;
     [SerializeField] private int segments = 20;
     [SerializeField] private int numFlings = 5;
 
@@ -71,7 +71,7 @@ public class FlingController : MonoBehaviour
         if (_isDragging)
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            _endPosition = Physics.Raycast(ray, out var hit, maxDistance) ? hit.point : ray.GetPoint(maxDistance);
+            _endPosition = Physics.Raycast(ray, out var hit, maxDistance, LayerMask.NameToLayer("Walkable")) ? hit.point : ray.GetPoint(maxDistance);
 
             //set the positions of the line renderer to form an arc
             var arcPoints = new Vector3[segments + 1];

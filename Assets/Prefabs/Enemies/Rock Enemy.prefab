@@ -131,6 +131,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1509582114903683025}
+  - {fileID: 6636204004632421869}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -210,11 +211,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b5a5ed96a94f3c48a3c148659d13106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TypeOfEnemy: 0
+  throwable: {fileID: 3624645676568127116, guid: eb0bac798c396c94faa111a4dfb21117, type: 3}
+  throwablePos: {fileID: 6636204004632421869}
   _affectedPlayer: 0
   agent: {fileID: 0}
-  minDistance: 10
-  rock: {fileID: 3624645676568127116, guid: eb0bac798c396c94faa111a4dfb21117, type: 3}
-  force: 100
+  minDistance: 20
+  throwForce: 25
+  canAttack: 0
 --- !u!195 &3488649365513037893
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -237,3 +241,34 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!1 &6745939327919108655
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6636204004632421869}
+  m_Layer: 0
+  m_Name: Throw Pos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6636204004632421869
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6745939327919108655}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.072999954, z: 0.5630001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3488649365513037890}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

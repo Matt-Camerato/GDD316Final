@@ -3056,6 +3056,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1408727536}
     m_Modifications:
+    - target: {fileID: -1924199699800655753, guid: f68b93606efb6e942921332e47c3809e, type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: 846ffd3d6ab670b4da94c4a8ffa70cfa, type: 2}
     - target: {fileID: 2138948144303538390, guid: f68b93606efb6e942921332e47c3809e, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -5303,7 +5307,7 @@ MonoBehaviour:
   maxDistance: 10
   forceMultiplier: 10
   maxForce: 40
-  stopVelocity: 0.01
+  stopVelocity: 0.02
   segments: 20
   numFlings: 15
   lineRenderer: {fileID: 2016151759}

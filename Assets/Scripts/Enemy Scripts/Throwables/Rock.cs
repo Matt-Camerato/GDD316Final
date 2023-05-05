@@ -2,17 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rock : MonoBehaviour
+public class Rock : ThrowableCollider
 {
-    // Start is called before the first frame update
-    void Start()
+    protected internal override void AffectPlayer(FlingController flingController)
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        base.AffectPlayer(flingController);
     }
 }

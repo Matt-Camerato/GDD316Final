@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class RockEnemy : EnemyController
 {
-    [SerializeField] private GameObject rock;
-    [SerializeField] private float force;
+    protected override void Awake()
+    {
+        TypeOfEnemy = global::TypeOfEnemy.EnemyType.Rock;
+        base.Awake();
+    }
     
     protected override void AffectPlayer()
     {
-        var go = Instantiate(rock);
+        var go = Instantiate(throwable, throwablePos.position, Quaternion.identity);
         go.TryGetComponent(out Rigidbody rb);
-        rb.AddForce(transform.forward * (force * Time.deltaTime));
+        rb.mass *= 10;
+        throwForce *= 10;
+        Throw(rb);
         base.AffectPlayer();
     }
 }

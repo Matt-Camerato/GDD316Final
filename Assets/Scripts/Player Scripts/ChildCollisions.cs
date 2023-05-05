@@ -8,21 +8,26 @@ public class ChildCollisions : MonoBehaviour
     private const string Walkable = "Walkable";
     private const string NotWalkable = "Not Walkable";
     private const string Throwable = "Throwables";
-    
+    private FlingController _flingController;
+
+    private void Awake()
+    {
+        transform.root.TryGetComponent(out _flingController);
+    }
+
     private void OnCollisionEnter(Collision other)
     {
-        var layer = other.gameObject.layer;
-
-        if (layer != GetLayerName(Walkable) &&
-            layer != GetLayerName(NotWalkable))
+        var go = other.gameObject;
+        var layer = go.layer;
+        if (layer == GetLayerName(Walkable) ||
+            layer == GetLayerName(NotWalkable))
         {
-            transform.root.TryGetComponent(out FlingController flingController);
-            if (!flingController) return;
-            flingController.IsGrounded = true;
+            if (!_flingController) return;
+            _flingController.IsGrounded = true;
         }
         else if (layer == GetLayerName(Throwable))
         {
-            ThrowableAttack();
+            ThrowableAttack(go);
         }
     } 
     
@@ -32,14 +37,16 @@ public class ChildCollisions : MonoBehaviour
 
         if (layer == GetLayerName("Walkable") ||
             layer == GetLayerName("Not Walkable")) return;
-        transform.root.TryGetComponent(out FlingController flingController);
-        if (!flingController) return;
-        flingController.IsGrounded = false;
+        if (!_flingController) return;
+        _flingController.IsGrounded = false;
     }
 
-    private void ThrowableAttack()
+    private void ThrowableAttack(GameObject collider)
     {
-        
+        collider.TryGetComponent(out ThrowableCollider throwableCollider);
+        Debug.Log("Child Collision");
+
+        throwableCollider.AffectPlayer(_flingController);
     }
 
     private static int GetLayerName(string layerName)

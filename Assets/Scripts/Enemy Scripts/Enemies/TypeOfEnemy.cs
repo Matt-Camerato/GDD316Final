@@ -6,4 +6,13 @@ using UnityEngine;
 public class TypeOfEnemy : ScriptableObject
 {
     public GameObject[] enemies;
+
+    public enum EnemyType
+    {
+        Rock,
+        Bomb,
+        Freeze
+    }
+
+    public EnemyType enemyType;
 }

@@ -10,6 +10,10 @@ using Random = UnityEngine.Random;
 public class EnemyController : MonoBehaviour
 {
     private protected FlingController PlayerController;
+    [SerializeField] private protected TypeOfEnemy.EnemyType TypeOfEnemy;
+    [SerializeField] protected GameObject throwable;
+    [SerializeField] protected Transform throwablePos;
+    
     private protected const string Gravity = "Gravity";
     private protected const string Kinematics = "Kinematics";
     private Transform _playerTransform;
@@ -19,8 +23,9 @@ public class EnemyController : MonoBehaviour
     private float walkRadius = 5;
     
     [SerializeField] protected float minDistance;
+    [SerializeField] protected float throwForce;
 
-    private bool canAttack;
+    [SerializeField]private bool canAttack;
     
     protected virtual void Awake()
     {
@@ -28,7 +33,10 @@ public class EnemyController : MonoBehaviour
         _affectedPlayer = false;
         GameObject.FindGameObjectWithTag($"Player").transform.root.TryGetComponent(out PlayerController);
         _playerTransform = PlayerController.rb.transform;
-        canAttack = false;
+        Debug.Log(PlayerPrefs.GetInt("FirstSpawn"));
+        canAttack = true;
+        if (PlayerPrefs.GetInt("FirstSpawn") != 1) return;
+        canAttack= false;
         StartCoroutine(InitialWaitToAttack());
     }
 
@@ -67,7 +75,6 @@ public class EnemyController : MonoBehaviour
 
     private void CheckForPlayer()
     {
-        if(!PlayerController.CanBeTargeted()) return;
         transform.LookAt(_playerTransform);
 
         // Get the position of the raycast origin
@@ -83,7 +90,6 @@ public class EnemyController : MonoBehaviour
         {
             // Draw a line from the raycast origin to the hit point
             Debug.DrawLine(originPos, hit.point, Color.green);
-            if (_affectedPlayer) return;
             StartCoroutine(WaitToAffect());
         }
         else
@@ -96,11 +102,19 @@ public class EnemyController : MonoBehaviour
     private IEnumerator WaitToAffect()
     {
         if(!canAttack) yield break;
+        if(PlayerController.IsGrounded) yield break;
+        if(_affectedPlayer) yield break;
         _affectedPlayer = true;
+        Debug.Log("Affect");
         AffectPlayer();
         yield return new WaitForSeconds(7);
-        yield return new WaitUntil(PlayerController.CanBeTargeted);
         _affectedPlayer = false;
+        canAttack = true;
+    }
+
+    protected void Throw(Rigidbody rb)
+    {
+        rb.AddForce(throwablePos.forward * (throwForce * 100), ForceMode.Force);
     }
     
     protected virtual void AffectPlayer()

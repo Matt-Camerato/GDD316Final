@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 3624645676568127114}
   - component: {fileID: 3624645676568127115}
   - component: {fileID: 8131044500779587220}
+  - component: {fileID: 7175122755096777659}
   m_Layer: 9
-  m_Name: EnemyRock
+  m_Name: EnemyBomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9cff2bd26d6172548a67525ccfe3aa63, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -114,3 +115,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7175122755096777659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3624645676568127116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6ca8d66fa3d9c84b98e9bc6cece1337, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TypeOfEnemy: 0
+  force: 10
