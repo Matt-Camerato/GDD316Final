@@ -5499,7 +5499,7 @@ MonoBehaviour:
   maxDistance: 10
   forceMultiplier: 10
   maxForce: 40
-  stopVelocity: 0.02
+  stopVelocity: 0.3
   segments: 20
   numFlings: 5
   lineRenderer: {fileID: 2016151759}

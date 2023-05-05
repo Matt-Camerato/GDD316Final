@@ -115,7 +115,6 @@ public class FlingController : MonoBehaviour
     {
         if (numFlings <= 0 && !_isMoving && !BeforeLaunch)
         {
-            Debug.Log("End");
             //show game over screen
             HUDAnimator.SetTrigger("GameOver");
             _isGameOver = true;
