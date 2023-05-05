@@ -52,16 +52,7 @@ public class FlingController : MonoBehaviour
 
     private void Update()
     {
-        //stop everything once the game is over
-        if(_isGameOver) return;
-
-        if(!CanFling) return;
-
-        //stop player completely once they are slower than the stop velocity
-        if (rb.velocity.magnitude < stopVelocity) StopMoving();
-
-        if (_isMoving) return; //don't allow another fling while player is moving
-
+        _isMoving = rb.velocity.magnitude > stopVelocity;
         if (numFlings <= 0 && !_isMoving)
         {
             //show game over screen
@@ -70,6 +61,17 @@ public class FlingController : MonoBehaviour
             return;
         }
 
+        //stop everything once the game is over
+        if(_isGameOver) return;
+
+        if(!CanFling) return;
+        
+        //stop player completely once they are slower than the stop velocity
+        if (rb.velocity.magnitude < stopVelocity) StopMoving();
+
+        if (_isMoving) return; //don't allow another fling while player is moving
+
+       
         if (Input.GetMouseButtonDown(0))
         {
             _startPosition = rb.transform.position;
@@ -96,7 +98,6 @@ public class FlingController : MonoBehaviour
         if (!Input.GetMouseButtonUp(0)) return;
 
         _isDragging = false;
-        _isMoving = true;
         StartCoroutine(HasLaunched());
         //calculate direction and distance of fling
         var forceDirection = _endPosition - _startPosition;
@@ -119,7 +120,6 @@ public class FlingController : MonoBehaviour
     {
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        _isMoving = false;
     }
 
     private Vector3 CalculateArcPoint(float t)

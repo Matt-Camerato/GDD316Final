@@ -33,7 +33,6 @@ public class EnemyController : MonoBehaviour
         _affectedPlayer = false;
         GameObject.FindGameObjectWithTag($"Player").transform.root.TryGetComponent(out PlayerController);
         _playerTransform = PlayerController.rb.transform;
-        Debug.Log(PlayerPrefs.GetInt("FirstSpawn"));
         canAttack = true;
         if (PlayerPrefs.GetInt("FirstSpawn") != 1) return;
         canAttack= false;
@@ -90,6 +89,7 @@ public class EnemyController : MonoBehaviour
         {
             // Draw a line from the raycast origin to the hit point
             Debug.DrawLine(originPos, hit.point, Color.green);
+            if(!canAttack) return;
             StartCoroutine(WaitToAffect());
         }
         else
@@ -101,20 +101,16 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator WaitToAffect()
     {
-        if(!canAttack) yield break;
         if(PlayerController.IsGrounded) yield break;
-        if(_affectedPlayer) yield break;
-        _affectedPlayer = true;
-        Debug.Log("Affect");
+        canAttack = false;
         AffectPlayer();
         yield return new WaitForSeconds(7);
-        _affectedPlayer = false;
         canAttack = true;
     }
 
     protected void Throw(Rigidbody rb)
     {
-        rb.AddForce(throwablePos.forward * (throwForce * 100), ForceMode.Force);
+        rb.AddForce(throwablePos.forward * (throwForce * 150), ForceMode.Force);
     }
     
     protected virtual void AffectPlayer()
