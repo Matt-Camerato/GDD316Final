@@ -87,6 +87,7 @@ public class EnemyController : MonoBehaviour
         // Cast the ray and check if it hit something
         if (Physics.Raycast(ray, out var hit))
         {
+            if(!hit.collider.CompareTag("Player")) return;
             // Draw a line from the raycast origin to the hit point
             Debug.DrawLine(originPos, hit.point, Color.green);
             if(!canAttack) return;

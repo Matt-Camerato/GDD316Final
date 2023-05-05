@@ -6,15 +6,24 @@ using UnityEngine;
 public class ThrowableCollider : MonoBehaviour
 {
     [SerializeField] public TypeOfEnemy.EnemyType TypeOfEnemy;
-
+    [SerializeField] private ParticleSystem particleEffect;
+    
     private void Start()
     {
-        StartCoroutine(DestroyAfterTime());
+        StartCoroutine(DestroyAfterTime(5));
     }
 
     protected internal virtual void AffectPlayer(FlingController flingController)
     {
-        DestroyThis();
+        if(particleEffect) particleEffect.Play();
+        var duration = particleEffect ? ParticleDuration() : 0;
+        StartCoroutine(DestroyAfterTime(duration));
+    }
+
+    private float ParticleDuration()
+    {
+        var main = particleEffect.main;
+        return main.duration;
     }
 
     private void DestroyThis()
@@ -22,9 +31,9 @@ public class ThrowableCollider : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private IEnumerator DestroyAfterTime()
+    private IEnumerator DestroyAfterTime(float time)
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(time);
         DestroyThis();
     }
 }

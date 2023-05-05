@@ -6,7 +6,6 @@ public class Rock : ThrowableCollider
 {
     protected internal override void AffectPlayer(FlingController flingController)
     {
-
         base.AffectPlayer(flingController);
     }
 }
