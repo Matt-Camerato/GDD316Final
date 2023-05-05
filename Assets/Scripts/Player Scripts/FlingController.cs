@@ -53,14 +53,8 @@ public class FlingController : MonoBehaviour
     private void Update()
     {
         _isMoving = rb.velocity.magnitude > stopVelocity;
-        if (numFlings <= 0 && !_isMoving)
-        {
-            //show game over screen
-            HUDAnimator.SetTrigger("GameOver");
-            _isGameOver = true;
-            return;
-        }
-
+        Debug.Log(_isMoving);
+        
         //stop everything once the game is over
         if(_isGameOver) return;
 
@@ -81,7 +75,8 @@ public class FlingController : MonoBehaviour
         if (_isDragging)
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            _endPosition = Physics.Raycast(ray, out var hit, maxDistance, LayerMask.NameToLayer("Walkable")) ? hit.point : ray.GetPoint(maxDistance);
+            // _endPosition = Physics.Raycast(ray, out var hit, maxDistance, LayerMask.NameToLayer("Walkable")) ? hit.point : ray.GetPoint(maxDistance);
+            _endPosition = ray.GetPoint(maxDistance);
 
             //set the positions of the line renderer to form an arc
             var arcPoints = new Vector3[segments + 1];
@@ -114,6 +109,18 @@ public class FlingController : MonoBehaviour
         numFlings--;
         totalNumFlings++;
         HUDManager.Instance.UpdateFlingCount(numFlings);
+    }
+
+    private void LateUpdate()
+    {
+        if (numFlings <= 0 && !_isMoving && !BeforeLaunch)
+        {
+            Debug.Log("End");
+            //show game over screen
+            HUDAnimator.SetTrigger("GameOver");
+            _isGameOver = true;
+            return;
+        }
     }
 
     private void StopMoving()
@@ -165,7 +172,7 @@ public class FlingController : MonoBehaviour
     private IEnumerator HasLaunched()
     {
         BeforeLaunch = true;
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         BeforeLaunch = false;
     }
 
