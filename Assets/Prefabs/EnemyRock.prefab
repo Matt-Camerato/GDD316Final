@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3624645676568127114}
   - component: {fileID: 3624645676568127115}
   - component: {fileID: 8131044500779587220}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EnemyRock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
