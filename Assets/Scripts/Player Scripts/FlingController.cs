@@ -15,8 +15,9 @@ public class FlingController : MonoBehaviour
     [SerializeField] private int segments = 20;
     [SerializeField] private int numFlings = 5;
 
-    [Header("References")] [SerializeField]
-    private LineRenderer lineRenderer;
+    [Header("References")] 
+    [SerializeField] private LineRenderer lineRenderer;
+    [SerializeField] private Animator HUDAnimator;
 
     public Rigidbody rb;
 
@@ -28,6 +29,7 @@ public class FlingController : MonoBehaviour
     private Vector3 _endPosition;
     private bool _isDragging = false;
     private bool _isMoving = false;
+    private bool _isGameOver = false;
     public const string Gravity = "Gravity";
     private const string Kinematics = "Kinematics";
     private int totalNumFlings = 0;
@@ -50,15 +52,21 @@ public class FlingController : MonoBehaviour
 
     private void Update()
     {
+        //stop everything once the game is over
+        if(_isGameOver) return;
+
         if(!CanFling) return;
+
         //stop player completely once they are slower than the stop velocity
         if (rb.velocity.magnitude < stopVelocity) StopMoving();
 
         if (_isMoving) return; //don't allow another fling while player is moving
 
-        if (numFlings <= 0)
+        if (numFlings <= 0 && !_isMoving)
         {
             //show game over screen
+            HUDAnimator.SetTrigger("GameOver");
+            _isGameOver = true;
             return;
         }
 

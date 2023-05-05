@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class HUDManager : MonoBehaviour
@@ -22,4 +23,8 @@ public class HUDManager : MonoBehaviour
     }
 
     public void UpdateFlingCount(int count) => flingCountText.text = count.ToString();
+
+    //game over screen methods
+    public void PlayAgain() => SceneManager.LoadScene(1);
+    public void Quit() => SceneManager.LoadScene(0);
 }
