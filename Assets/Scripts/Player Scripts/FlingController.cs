@@ -164,7 +164,13 @@ public class FlingController : MonoBehaviour
     {
         AffectGravity(whatToAffect, false);
         if(whatToAffect == Kinematics) _effectManager.ShowEffect(EffectManager.Freeze);
-        yield return new WaitForSeconds(duration);
+        float time = duration;
+        while(time > 0)
+        {
+            time -= Time.deltaTime;
+            if (whatToAffect == Gravity) HUDManager.Instance.SetDuration(time, duration);
+            yield return null;
+        }
         if (whatToAffect == Gravity) _pickupManager.ChangeCurrentPickup(PickupManager.CurrentPickup.None);
         AffectGravity(whatToAffect, true);
     }

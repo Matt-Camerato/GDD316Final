@@ -349,6 +349,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distanceText: {fileID: 1016596955}
   flingCountText: {fileID: 555807409}
+  powerupIcon: {fileID: 1593989143}
+  powerupSprites:
+  - {fileID: 21300000, guid: 8a0989c943369af42a6c727f0f8bc3ac, type: 3}
+  - {fileID: 21300000, guid: 4514322afb601b745b5c773a1e982fd9, type: 3}
+  powerupDuration: {fileID: 1421873302}
   playerTransform: {fileID: 6583733712086433672}
 --- !u!95 &70623483
 Animator:
@@ -3578,7 +3583,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 1
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0

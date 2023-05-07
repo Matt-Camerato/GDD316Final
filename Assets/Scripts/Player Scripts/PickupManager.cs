@@ -64,6 +64,9 @@ public class PickupManager : MonoBehaviour
    public void ChangeCurrentPickup(CurrentPickup currentPickup)
    {
       pickupType = currentPickup;
+      if(currentPickup == CurrentPickup.None) HUDManager.Instance.SetPowerupIcon(-1);
+      else if(currentPickup == CurrentPickup.Bomb) HUDManager.Instance.SetPowerupIcon(0);
+      else if(currentPickup == CurrentPickup.LowGravity) HUDManager.Instance.SetPowerupIcon(1);
    }
 
    public CurrentPickup CurrentPlayerPickup()

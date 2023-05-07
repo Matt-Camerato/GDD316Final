@@ -11,6 +11,9 @@ public class HUDManager : MonoBehaviour
     
     [SerializeField] private TMP_Text distanceText;
     [SerializeField] private TMP_Text flingCountText;
+    [SerializeField] private Image powerupIcon;
+    [SerializeField] private List<Sprite> powerupSprites = new List<Sprite>();
+    [SerializeField] private Image powerupDuration;
 
     [SerializeField] private Transform playerTransform;
 
@@ -23,6 +26,22 @@ public class HUDManager : MonoBehaviour
     }
 
     public void UpdateFlingCount(int count) => flingCountText.text = count.ToString();
+
+    public void SetPowerupIcon(int index)
+    {
+        if(index == -1)
+        {
+            powerupIcon.enabled = false;
+            powerupDuration.fillAmount = 0;
+            return;
+        }
+
+        powerupIcon.enabled = true;
+        powerupDuration.fillAmount = 1;
+        powerupIcon.sprite = powerupSprites[index];
+    }
+
+    public void SetDuration(float value, float duration) => powerupDuration.fillAmount = value / duration;
 
     //game over screen methods
     public void PlayAgain() => SceneManager.LoadScene(1);
