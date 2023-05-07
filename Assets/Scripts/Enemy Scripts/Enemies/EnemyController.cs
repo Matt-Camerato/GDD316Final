@@ -75,37 +75,16 @@ public class EnemyController : MonoBehaviour
     private void CheckForPlayer()
     {
         transform.LookAt(_playerTransform);
-
-        // Get the position of the raycast origin
-        var originPos = transform.position;
-
-        // Create a raycast from the position of the raycast origin
-        var ray = new Ray(originPos, transform.forward);
-
-        // Create a RaycastHit variable to store information about the hit object
-
-        // Cast the ray and check if it hit something
-        if (Physics.Raycast(ray, out var hit))
-        {
-            if(!hit.collider.CompareTag("Player")) return;
-            // Draw a line from the raycast origin to the hit point
-            Debug.DrawLine(originPos, hit.point, Color.green);
-            if(!canAttack) return;
-            StartCoroutine(WaitToAffect());
-        }
-        else
-        {
-            // Draw a line from the raycast origin out to a maximum distance
-            Debug.DrawLine(originPos, originPos + ray.direction * 100, Color.red);
-        }
+        if(!canAttack) return;
+        StartCoroutine(WaitToAffect());
     }
 
     private IEnumerator WaitToAffect()
     {
-        if(PlayerController.IsGrounded) yield break;
+     //   if(PlayerController.IsGrounded) yield break;
         canAttack = false;
         AffectPlayer();
-        yield return new WaitForSeconds(7);
+        yield return new WaitForSeconds(14);
         canAttack = true;
     }
 
@@ -114,8 +93,5 @@ public class EnemyController : MonoBehaviour
         rb.AddForce(throwablePos.forward * (throwForce * 150), ForceMode.Force);
     }
     
-    protected virtual void AffectPlayer()
-    {
-        StartCoroutine(PlayerController.GotAttacked());
-    }
+    protected virtual void AffectPlayer() { }
 }

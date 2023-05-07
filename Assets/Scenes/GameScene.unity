@@ -2420,7 +2420,7 @@ MonoBehaviour:
   xRotSpeed: 250
   yRotSpeed: 120
   zoomInMin: 25
-  zoomInMax: 55
+  zoomInMax: 65
 --- !u!1 &980778226
 GameObject:
   m_ObjectHideFlags: 0
@@ -5501,7 +5501,7 @@ MonoBehaviour:
   maxForce: 40
   stopVelocity: 0.3
   segments: 20
-  numFlings: 5
+  numFlings: 58
   lineRenderer: {fileID: 2016151759}
   HUDAnimator: {fileID: 70623483}
   rb: {fileID: 46539502}

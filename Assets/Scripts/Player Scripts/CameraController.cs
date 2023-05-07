@@ -8,7 +8,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float xRotSpeed = 250f;
     [SerializeField] private float yRotSpeed = 120f;
     [SerializeField] private float zoomInMin = 25;
-    [SerializeField] private float zoomInMax = 55;
+    [SerializeField] private float zoomInMax = 65;
     
     private Vector3 offset;
     private float x;

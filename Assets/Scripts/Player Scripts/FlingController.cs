@@ -42,6 +42,8 @@ public class FlingController : MonoBehaviour
         foreach (var rigidbody in _rigidbodies)
         {
             rigidbody.transform.AddComponent<ChildCollisions>();
+            rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
             rigidbody.transform.tag = "Player";
         }
 
@@ -53,7 +55,6 @@ public class FlingController : MonoBehaviour
     private void Update()
     {
         _isMoving = rb.velocity.magnitude > stopVelocity;
-        Debug.Log(_isMoving);
         
         //stop everything once the game is over
         if(_isGameOver) return;
