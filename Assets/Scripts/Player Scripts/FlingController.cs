@@ -73,6 +73,8 @@ public class FlingController : MonoBehaviour
             _isDragging = true;
         }
 
+        var forceDirection = Vector3.zero;
+        
         if (_isDragging)
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -84,7 +86,8 @@ public class FlingController : MonoBehaviour
             for (var i = 0; i <= segments; i++)
             {
                 var t = (float)i / (float)segments;
-                arcPoints[i] = Vector3.Lerp(_startPosition, _endPosition, t) + CalculateArcPoint(t);
+                arcPoints[i] = Vector3.Lerp(_startPosition, _endPosition, t) + CalculateArcPoint(t); 
+                forceDirection = arcPoints[i];
             }
 
             lineRenderer.positionCount = arcPoints.Length;
@@ -96,7 +99,7 @@ public class FlingController : MonoBehaviour
         _isDragging = false;
         StartCoroutine(HasLaunched());
         //calculate direction and distance of fling
-        var forceDirection = _endPosition - _startPosition;
+        
         var distance = forceDirection.magnitude;
         forceDirection.Normalize();
 
