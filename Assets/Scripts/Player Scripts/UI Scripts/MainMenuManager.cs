@@ -19,4 +19,6 @@ public class MainMenuManager : MonoBehaviour
     {
 
     }
+
+    public void InteractSFX() => AudioManager.Instance.InteractSFX();
 }

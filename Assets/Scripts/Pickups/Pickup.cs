@@ -25,6 +25,7 @@ public class Pickup : MonoBehaviour
 
     protected virtual void OnPickUp(PickupManager playerController)
     {
+        AudioManager.Instance.CollectSFX();
         Destroy(gameObject);
     }
 }

@@ -103,6 +103,9 @@ public class FlingController : MonoBehaviour
         //apply force to rigidbody
         ApplyForce(forceDirection, distance, forceMultiplier);
 
+        //play fling sound effect
+        AudioManager.Instance.FlingSFX();
+
         //clear line renderer
         lineRenderer.positionCount = 0;
 
@@ -114,10 +117,11 @@ public class FlingController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (numFlings <= 0 && !_isMoving && !BeforeLaunch)
+        if (numFlings <= 0 && !_isMoving && !BeforeLaunch && !_isGameOver)
         {
             //show game over screen
             HUDAnimator.SetTrigger("GameOver");
+            AudioManager.Instance.GameOverSFX();
             _isGameOver = true;
             return;
         }
@@ -163,7 +167,11 @@ public class FlingController : MonoBehaviour
     private IEnumerator GravitySwitch(string whatToAffect, float duration)
     {
         AffectGravity(whatToAffect, false);
-        if(whatToAffect == Kinematics) _effectManager.ShowEffect(EffectManager.Freeze);
+        if(whatToAffect == Kinematics)
+        {
+            _effectManager.ShowEffect(EffectManager.Freeze);
+            AudioManager.Instance.FreezeSFX();
+        }
         float time = duration;
         while(time > 0)
         {

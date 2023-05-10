@@ -47,6 +47,7 @@ public class PickupManager : MonoBehaviour
    private void BombPickup()
    {
       _playerController.ApplyForce(_playerController.transform.forward, 2, Force);
+      AudioManager.Instance.BombSFX();
       ChangeCurrentPickup(CurrentPickup.None);
    }
 
@@ -59,6 +60,7 @@ public class PickupManager : MonoBehaviour
    private void LowGravityPickup()
    {
       _playerController.ChangeGravity(FlingController.Gravity, Duration);
+      AudioManager.Instance.LowGravitySFX();
    }
 
    public void ChangeCurrentPickup(CurrentPickup currentPickup)

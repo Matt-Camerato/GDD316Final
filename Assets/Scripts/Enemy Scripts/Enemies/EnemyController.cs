@@ -91,6 +91,7 @@ public class EnemyController : MonoBehaviour
     protected void Throw(Rigidbody rb)
     {
         rb.AddForce(throwablePos.forward * (throwForce * 150), ForceMode.Force);
+        AudioManager.Instance.ThrowSFX();
     }
     
     protected virtual void AffectPlayer() { }

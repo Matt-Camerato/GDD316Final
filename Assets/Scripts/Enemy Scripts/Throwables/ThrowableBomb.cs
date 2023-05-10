@@ -9,6 +9,7 @@ public class ThrowableBomb : ThrowableCollider
     protected internal override void AffectPlayer(FlingController flingController)
     {
         flingController.ApplyForce(-flingController.rb.transform.forward, 2, force);
+        AudioManager.Instance.BombSFX();
         base.AffectPlayer(flingController);
     }
 }
