@@ -22,12 +22,12 @@ public class EnemySpawner : MonoBehaviour
         _enemies = Resources.Load<TypeOfEnemy>("Scriptable Objects/Enemies");
         _isSpawning = false;
         _randomTime = RandomizeFloat(4, timeToSpawn);
-        TunnelGenerator.GeneratedPiece += SpawnManager;
+        TunnelGenerator.SpawnEnemy += SpawnManager;
     }
 
     private void OnDisable()
     {
-        TunnelGenerator.GeneratedPiece -= SpawnManager;
+        TunnelGenerator.SpawnEnemy -= SpawnManager;
     }
 
     private void SpawnManager()

@@ -34,9 +34,9 @@ public class EnemyController : MonoBehaviour
         GameObject.FindGameObjectWithTag($"Player").transform.root.TryGetComponent(out PlayerController);
         _playerTransform = PlayerController.rb.transform;
         canAttack = true;
-        if (PlayerPrefs.GetInt("FirstSpawn") != 1) return;
-        canAttack= false;
-        StartCoroutine(InitialWaitToAttack());
+        //if (PlayerPrefs.GetInt("FirstSpawn") != 1) return;
+        //canAttack= false;
+        //StartCoroutine(InitialWaitToAttack());
     }
 
     private IEnumerator InitialWaitToAttack()
@@ -81,7 +81,7 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator WaitToAffect()
     {
-     //   if(PlayerController.IsGrounded) yield break;
+        if(PlayerController.IsGrounded) yield break;
         canAttack = false;
         AffectPlayer();
         yield return new WaitForSeconds(14);

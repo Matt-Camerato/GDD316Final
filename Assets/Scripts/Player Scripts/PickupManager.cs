@@ -54,7 +54,6 @@ public class PickupManager : MonoBehaviour
    public void AddFlingPickup(int numFlings)
    {
       _playerController.AddFlings(numFlings);
-      ChangeCurrentPickup(CurrentPickup.None);
    }
 
    private void LowGravityPickup()

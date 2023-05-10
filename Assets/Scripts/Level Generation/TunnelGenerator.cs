@@ -8,9 +8,12 @@ public class TunnelGenerator : MonoBehaviour
 {
     public static TunnelGenerator Instance;
     public static event Action GeneratedPiece;
+    public static event Action SpawnEnemy;
+    
     [Header("Tunnel Settings")]
     [SerializeField] private int renderDistance = 6;
     [SerializeField] private int powerupFrequency = 3;
+    [SerializeField] private int enemyFrequency = 3;
 
     [Header("References")]
     [SerializeField] private GameObject tunnelStart;
@@ -30,6 +33,7 @@ public class TunnelGenerator : MonoBehaviour
         {
             PlayerPrefs.DeleteKey("FirstSpawn");
         }
+        
         PlayerPrefs.SetInt("FirstSpawn", 0);
         //spawn pieces in front of player within their render distance
         for(int i = 1; i <= renderDistance; i++) SpawnPiece(i);
@@ -56,20 +60,23 @@ public class TunnelGenerator : MonoBehaviour
         PlayerPrefs.SetInt("FirstSpawn", firstSpawn);
         //get prefab to spawn
         GeneratedPiece?.Invoke();
-        int prefabIndex = Random.Range(0, tunnelPieces.Count);
+        var prefabIndex = Random.Range(0, tunnelPieces.Count);
         while(lastPieceAdded == prefabIndex) prefabIndex = Random.Range(0, tunnelPieces.Count);
         lastPieceAdded = prefabIndex;
-        GameObject prefab = tunnelPieces[prefabIndex];
+        var prefab = tunnelPieces[prefabIndex];
         
         //spawn piece with x offset
-        Vector3 xOffset = Vector3.right * 40 * index;
-        Vector3 spawnPos = transform.position + xOffset;
-        GameObject newPiece = Instantiate(prefab, spawnPos, Quaternion.identity, tunnelPieceParent);
+        var xOffset = Vector3.right * 40 * index;
+        var spawnPos = transform.position + xOffset;
+        var newPiece = Instantiate(prefab, spawnPos, Quaternion.identity, tunnelPieceParent);
         currentPieces.Add(newPiece);
+        newPiece.TryGetComponent(out TunnelPiece tunnelPiece);
+        tunnelPiece.index = index;
         newPiece.GetComponent<TunnelPiece>().index = index;
-        
+
         //spawn with just flings or powerups depending on piece index
-        if(index % powerupFrequency == 0) newPiece.GetComponent<TunnelPiece>().SpawnWithPowerup();
-        else newPiece.GetComponent<TunnelPiece>().SpawnWithoutPowerup();
+        (index % powerupFrequency == 0 ? (Action)tunnelPiece.SpawnWithPowerup : tunnelPiece.SpawnWithoutPowerup)();
+        if(index % enemyFrequency == 0 && index != 0)
+            SpawnEnemy?.Invoke();
     }
 }

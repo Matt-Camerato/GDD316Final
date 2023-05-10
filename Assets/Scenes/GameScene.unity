@@ -3416,6 +3416,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderDistance: 6
   powerupFrequency: 3
+  enemyFrequency: 7
   tunnelStart: {fileID: 1692155101}
   playerTransform: {fileID: 6583733712086433672}
   tunnelPieceParent: {fileID: 1134064468}
