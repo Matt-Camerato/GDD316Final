@@ -27,9 +27,10 @@ public class FlingController : MonoBehaviour
     private PickupManager _pickupManager;
     private EffectManager _effectManager;
     
-    private Vector3 _startPosition;
+    public Vector3 _startPosition;
     private Vector3 _endPosition;
-    private bool _isDragging = false;
+    public bool _isDragging = false;
+    public bool releasedDrag = false;
     private bool _isMoving = false;
     private bool _isGameOver = false;
     public const string Gravity = "Gravity";
@@ -52,6 +53,7 @@ public class FlingController : MonoBehaviour
             rigidbody.transform.tag = "Player";
         }
 
+        releasedDrag = false;
         CanFling = true;
     }
 
@@ -89,12 +91,12 @@ public class FlingController : MonoBehaviour
         if (_isMoving) return; //don't allow another fling while player is moving
 
        
-        if (Input.GetMouseButtonDown(0))
+        /*if (Input.GetMouseButtonDown(0))
         {
             _startPosition = rb.transform.position;
             _isDragging = true;
         }
-        else if(Input.GetMouseButtonDown(1))
+        else */if(Input.GetMouseButtonDown(1))
         {
             _isDragging = false;
             lineRenderer.positionCount = 0;
@@ -121,9 +123,10 @@ public class FlingController : MonoBehaviour
             lineRenderer.SetPositions(arcPoints);
         }
 
-        if (!Input.GetMouseButtonUp(0)) return;
+        if (!releasedDrag) return;
 
         _isDragging = false;
+        releasedDrag = false;
         if(forceDirection == Vector3.zero) return;
         StartCoroutine(HasLaunched());
         //calculate direction and distance of fling
