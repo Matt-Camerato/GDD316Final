@@ -41,7 +41,7 @@ public class HUDManager : MonoBehaviour
 
         settingsPanel.SetActive(true);
         sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 0.75f);
-        musicSlider.value = PlayerPrefs.GetFloat("MusicSlider", 0.75f);
+        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 0.75f);
         IsPaused = true;
     }
 
