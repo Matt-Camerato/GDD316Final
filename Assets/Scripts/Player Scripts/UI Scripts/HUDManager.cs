@@ -8,13 +8,16 @@ using TMPro;
 public class HUDManager : MonoBehaviour
 {
     public static HUDManager Instance;
+
+    public bool IsPaused = false;
     
     [SerializeField] private TMP_Text distanceText;
     [SerializeField] private TMP_Text flingCountText;
     [SerializeField] private Image powerupIcon;
     [SerializeField] private List<Sprite> powerupSprites = new List<Sprite>();
     [SerializeField] private Image powerupDuration;
-
+    [SerializeField] private GameObject settingsPanel;
+    [SerializeField] private Slider sfxSlider, musicSlider;
     [SerializeField] private Transform playerTransform;
 
     private void Awake() => Instance = this;
@@ -23,7 +26,27 @@ public class HUDManager : MonoBehaviour
     {
         //update distance text with player's x position
         distanceText.text = "Distance: " + playerTransform.position.x.ToString("F2") + "m";
+
+        if(Input.GetKeyDown(KeyCode.Escape)) ToggleSettings();
     }
+
+    private void ToggleSettings()
+    {
+        if(settingsPanel.activeSelf)
+        {
+            settingsPanel.SetActive(false);
+            IsPaused = false;
+            return;
+        }
+
+        settingsPanel.SetActive(true);
+        sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 0.75f);
+        musicSlider.value = PlayerPrefs.GetFloat("MusicSlider", 0.75f);
+        IsPaused = true;
+    }
+
+    public void SetSFXVolume(float value) => AudioManager.Instance.SetSFXVolume(value);
+    public void SetMusicVolume(float value) => AudioManager.Instance.SetMusicVolume(value);
 
     public void UpdateFlingCount(int count) => flingCountText.text = count.ToString();
 
@@ -46,4 +69,7 @@ public class HUDManager : MonoBehaviour
     //game over screen methods
     public void PlayAgain() => SceneManager.LoadScene(1);
     public void Quit() => SceneManager.LoadScene(0);
+
+    //button SFX method
+    public void InteractSFX() => AudioManager.Instance.InteractSFX();
 }

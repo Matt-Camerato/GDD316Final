@@ -92,7 +92,4 @@ public class GameOverScreenManager : MonoBehaviour
     //button methods cue screen fade into scene transition
     public void PlayAgainButton() => HUDAnimator.SetTrigger("PlayAgain");
     public void QuitButton() => HUDAnimator.SetTrigger("Quit");
-
-    //button SFX method
-    public void InteractSFX() => AudioManager.Instance.InteractSFX();
 }

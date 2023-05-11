@@ -5,8 +5,6 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
-    public static float SFXVolume;
-    public static float MusicVolume;
 
     [Header("Sound Effects")]
     [SerializeField] private AudioClip flingSFX;
@@ -19,7 +17,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip[] music;
     
     [Header("Audio Sources")]
-    [SerializeField] private AudioSource SFXSource;
+    [SerializeField] private AudioSource sfxSource;
     [SerializeField] private AudioSource musicSource;
    
     private int _lastSong;
@@ -34,28 +32,37 @@ public class AudioManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         //load and set volume levels
-        SFXVolume = PlayerPrefs.GetFloat("SFXVolume", 0.75f);
-        MusicVolume = PlayerPrefs.GetFloat("MusicVolume", 0.15f);
-        musicSource.volume = MusicVolume;
-        SFXSource.volume = SFXVolume; 
+        sfxSource.volume = PlayerPrefs.GetFloat("SFXVolume", 0.75f);
+        musicSource.volume = PlayerPrefs.GetFloat("MusicVolume", 0.75f);
         PlayMusic(RandomClip());
-        //remember to set slider value
     }
 
-    public void FlingSFX() => SFXSource.PlayOneShot(flingSFX);
-    public void SlapSFX() => SFXSource.PlayOneShot(slapSFX);
-    public void CollectSFX() => SFXSource.PlayOneShot(collectSFX);
+    public void SetSFXVolume(float value)
+    {
+        PlayerPrefs.SetFloat("SFXVolume", value);
+        sfxSource.volume = value;
+    }
 
-    public void ThrowSFX() => SFXSource.PlayOneShot(throwSFX);
-    public void HitSFX() => SFXSource.PlayOneShot(hitSFX);
+    public void SetMusicVolume(float value)
+    {
+        PlayerPrefs.SetFloat("MusicVolume", value);
+        musicSource.volume = value;
+    }
 
-    public void BombSFX() => SFXSource.PlayOneShot(bombSFX);
-    public void LowGravitySFX() => SFXSource.PlayOneShot(lowGravitySFX);
-    public void FreezeSFX() => SFXSource.PlayOneShot(freezeSFX);
+    public void FlingSFX() => sfxSource.PlayOneShot(flingSFX);
+    public void SlapSFX() => sfxSource.PlayOneShot(slapSFX);
+    public void CollectSFX() => sfxSource.PlayOneShot(collectSFX);
 
-    public void InteractSFX() => SFXSource.PlayOneShot(interactSFX);
+    public void ThrowSFX() => sfxSource.PlayOneShot(throwSFX);
+    public void HitSFX() => sfxSource.PlayOneShot(hitSFX);
 
-    public void GameOverSFX() => SFXSource.PlayOneShot(gameOverSFX);
+    public void BombSFX() => sfxSource.PlayOneShot(bombSFX);
+    public void LowGravitySFX() => sfxSource.PlayOneShot(lowGravitySFX);
+    public void FreezeSFX() => sfxSource.PlayOneShot(freezeSFX);
+
+    public void InteractSFX() => sfxSource.PlayOneShot(interactSFX);
+
+    public void GameOverSFX() => sfxSource.PlayOneShot(gameOverSFX);
 
     private void PlayMusic(int i)
     {

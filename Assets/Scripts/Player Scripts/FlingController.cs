@@ -60,7 +60,7 @@ public class FlingController : MonoBehaviour
         _isMoving = rb.velocity.magnitude > stopVelocity;
 
         //stop everything once the game is over
-        if(_isGameOver) return;
+        if(_isGameOver || HUDManager.Instance.IsPaused) return;
 
         if(!CanFling) return;
         
