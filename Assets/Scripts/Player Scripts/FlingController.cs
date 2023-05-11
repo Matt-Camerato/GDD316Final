@@ -75,6 +75,12 @@ public class FlingController : MonoBehaviour
             _startPosition = rb.transform.position;
             _isDragging = true;
         }
+        else if(Input.GetMouseButtonDown(1))
+        {
+            _isDragging = false;
+            lineRenderer.positionCount = 0;
+            forceDirection= Vector3.zero;
+        }
 
         
         if (_isDragging)
@@ -99,6 +105,7 @@ public class FlingController : MonoBehaviour
         if (!Input.GetMouseButtonUp(0)) return;
 
         _isDragging = false;
+        if(forceDirection == Vector3.zero) return;
         StartCoroutine(HasLaunched());
         //calculate direction and distance of fling
         // forceDirection = lineRenderer.GetPosition(lineRenderer.positionCount - 1);

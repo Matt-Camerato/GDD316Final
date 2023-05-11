@@ -21,6 +21,16 @@ public class PickupManager : MonoBehaviour
    public float Force { get; set; }
    public float Duration { get; set; }
 
+   private void OnEnable()
+   {
+      HUDManager.ActivatePowerUp += ActivatePowerUp;
+   }
+
+   private void OnDisable()
+   {
+      HUDManager.ActivatePowerUp -= ActivatePowerUp;
+   }
+
    private void Start()
    {
       TryGetComponent(out _playerController);
@@ -31,6 +41,11 @@ public class PickupManager : MonoBehaviour
    private void Update()
    {
       if (!Input.GetKeyDown(KeyCode.Space)) return;
+      ActivatePowerUp();
+   }
+
+   public void ActivatePowerUp()
+   {
       switch (pickupType)
       {
          case CurrentPickup.Bomb:

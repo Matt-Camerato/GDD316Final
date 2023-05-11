@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,8 @@ using TMPro;
 public class HUDManager : MonoBehaviour
 {
     public static HUDManager Instance;
-
+    public static event Action ActivatePowerUp;
+    
     public bool IsPaused = false;
     
     [SerializeField] private TMP_Text distanceText;
@@ -70,6 +72,10 @@ public class HUDManager : MonoBehaviour
     public void PlayAgain() => SceneManager.LoadScene(1);
     public void Quit() => SceneManager.LoadScene(0);
 
+    public void PlayerPowerUp()
+    {
+        ActivatePowerUp?.Invoke();
+    }
     //button SFX method
     public void InteractSFX() => AudioManager.Instance.InteractSFX();
 }
