@@ -5444,7 +5444,7 @@ MonoBehaviour:
   horizontalCoefficient: 2.5
   verticalCoefficient: 4
   segments: 20
-  numFlings: 10
+  numFlings: 1
   lineRenderer: {fileID: 2016151759}
   HUDAnimator: {fileID: 70623483}
   rb: {fileID: 46539502}

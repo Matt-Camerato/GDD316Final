@@ -6,6 +6,7 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
     public static float SFXVolume;
+    public static float MusicVolume;
 
     [Header("Sound Effects")]
     [SerializeField] private AudioClip flingSFX;
@@ -15,11 +16,14 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip bombSFX, lowGravitySFX, freezeSFX;
     [SerializeField] private AudioClip interactSFX;
     [SerializeField] private AudioClip gameOverSFX;
-
+    [SerializeField] private AudioClip[] music;
+    
     [Header("Audio Sources")]
     [SerializeField] private AudioSource SFXSource;
     [SerializeField] private AudioSource musicSource;
-
+   
+    private int _lastSong;
+    
     private void Awake()
     {
         //set singleton instance
@@ -31,7 +35,10 @@ public class AudioManager : MonoBehaviour
 
         //load and set volume levels
         SFXVolume = PlayerPrefs.GetFloat("SFXVolume", 0.75f);
-        SFXSource.volume = SFXVolume;
+        MusicVolume = PlayerPrefs.GetFloat("MusicVolume", 0.15f);
+        musicSource.volume = MusicVolume;
+        SFXSource.volume = SFXVolume; 
+        PlayMusic(RandomClip());
         //remember to set slider value
     }
 
@@ -49,4 +56,30 @@ public class AudioManager : MonoBehaviour
     public void InteractSFX() => SFXSource.PlayOneShot(interactSFX);
 
     public void GameOverSFX() => SFXSource.PlayOneShot(gameOverSFX);
+
+    private void PlayMusic(int i)
+    {
+        musicSource.clip = music[i];
+        musicSource.Play();
+        StartCoroutine(WaitForSongToEnd());
+    }
+
+    private static IEnumerator WaitForSongToEnd()
+    {
+        while(Instance.musicSource.isPlaying)
+        {
+            yield return null;
+        }
+
+        var i = Instance.RandomClip();
+        Instance._lastSong = i;
+        Instance.PlayMusic(i);
+    }
+
+    private int RandomClip()
+    {
+        var i = Random.Range(0, music.Length);
+        i = i == _lastSong ? RandomClip() : i;
+        return i;
+    }
 }
