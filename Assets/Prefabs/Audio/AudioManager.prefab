@@ -56,6 +56,13 @@ MonoBehaviour:
   freezeSFX: {fileID: 8300000, guid: 058a78c5b9d364946b82cf696a3e1225, type: 3}
   interactSFX: {fileID: 8300000, guid: 34e21912d01ab6c47926306dcc4756ef, type: 3}
   gameOverSFX: {fileID: 8300000, guid: 02ce08b5958f72346a73e810bc60a091, type: 3}
+  music:
+  - {fileID: 8300000, guid: e34b1ee85f9b4944d83ea07f9ddccb50, type: 3}
+  - {fileID: 8300000, guid: 2981618bcc458534f9b588dd41e665d7, type: 3}
+  - {fileID: 8300000, guid: 2cc2fadfc5f12334bbe392dbe14718bb, type: 3}
+  - {fileID: 8300000, guid: 93ddc5710a696e540841f98dda1f286a, type: 3}
+  - {fileID: 8300000, guid: f188ed4e0a4266b4c973d184dcae2f96, type: 3}
+  - {fileID: 8300000, guid: 72c5621c611ade74e84367c143832505, type: 3}
   sfxSource: {fileID: 3242436720621720211}
   musicSource: {fileID: 3242436720540482256}
 --- !u!1 &3242436720540482258
