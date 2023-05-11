@@ -9,11 +9,13 @@ public class EffectManager : MonoBehaviour
     [SerializeField] private ParticleSystem frozenEffect;
     [SerializeField] private ParticleSystem rockEffect;
     [SerializeField] private ParticleSystem bombEffect;
+    [SerializeField] private ParticleSystem groundEffect;
     [SerializeField] private bool playEffectDebug;
     public const string Freeze = "Freeze";
     public const string Rock = "Rock";
     public const string Bomb = "Bomb";
-    
+    public const string Ground = "Ground";
+
     private void Update()
     {
         if (playEffectDebug)
@@ -29,29 +31,40 @@ public class EffectManager : MonoBehaviour
         playEffectDebug = false;
         effect.Play();
         //Debug.Log("Play");
-        yield return new WaitForSeconds(duration/ 2);
+        yield return new WaitForSeconds(duration / 2);
         effect.Pause();
         //Debug.Log("Pause");
         yield return new WaitForSeconds(duration / 2);
         //Debug.Log("Resume");
         effect.Play();
     }
-    
+
     public void ShowEffect(string effectName)
     {
         switch (effectName)
         {
-            case "Freeze":
+            case Freeze:
                 StartCoroutine(PlayEffect(frozenEffect));
                 break;
-            case "Rock":
+            case Rock:
                 StartCoroutine(PlayEffect(rockEffect));
                 break;
-            case "Bomb":
+            case Bomb:
                 StartCoroutine(PlayEffect(bombEffect));
                 break;
         }
     }
 
-    
+    public void PlayEffect(string effectName)
+    {
+        switch (effectName)
+        {
+            case Bomb:
+                bombEffect.Play();
+                break;
+            case Ground:
+                groundEffect.Play();
+                break;
+        }
+    }
 }

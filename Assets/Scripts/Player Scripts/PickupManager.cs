@@ -6,6 +6,7 @@ using UnityEngine;
 public class PickupManager : MonoBehaviour
 {
    private FlingController _playerController;
+   private EffectManager _effectManager;
    
    public enum CurrentPickup
    {
@@ -23,6 +24,7 @@ public class PickupManager : MonoBehaviour
    private void Start()
    {
       TryGetComponent(out _playerController);
+      TryGetComponent(out _effectManager);
       ChangeCurrentPickup(CurrentPickup.None);
    }
 
@@ -47,6 +49,7 @@ public class PickupManager : MonoBehaviour
    private void BombPickup()
    {
       _playerController.ApplyForce(_playerController.transform.forward, 2, Force);
+      _effectManager.PlayEffect(EffectManager.Bomb);
       AudioManager.Instance.BombSFX();
       ChangeCurrentPickup(CurrentPickup.None);
    }

@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ChildCollisions : MonoBehaviour
 {
+    private static ChildCollisions _instance;
+    
     private const string Walkable = "Walkable";
     private const string NotWalkable = "Not Walkable";
     private const string Throwable = "Throwables";
@@ -12,6 +15,7 @@ public class ChildCollisions : MonoBehaviour
 
     private void Awake()
     {
+        _instance = this;
         transform.root.TryGetComponent(out _flingController);
     }
 
@@ -22,15 +26,17 @@ public class ChildCollisions : MonoBehaviour
         if (layer == GetLayerName(Walkable) ||
             layer == GetLayerName(NotWalkable))
         {
-            if (!_flingController) return;
+            if (!_instance._flingController) return;
             _flingController.IsGrounded = true;
+            transform.root.TryGetComponent(out EffectManager effectManager);
+            effectManager.PlayEffect(EffectManager.Ground);
         }
         else if (layer == GetLayerName(Throwable))
         {
-            ThrowableAttack(go);
+            _instance.ThrowableAttack(go);
         }
-    } 
-    
+    }
+
     private void OnCollisionExit(Collision other)
     {
         var layer = other.gameObject.layer;
@@ -53,4 +59,5 @@ public class ChildCollisions : MonoBehaviour
     {
         return LayerMask.NameToLayer(layerName);
     }
+    
 }
