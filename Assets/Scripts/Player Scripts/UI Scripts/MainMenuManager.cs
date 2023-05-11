@@ -16,7 +16,7 @@ public class MainMenuManager : MonoBehaviour
 
         //set initial slider values
         sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 0.75f);
-        musicSlider.value = PlayerPrefs.GetFloat("SFXVolume", 0.75f);
+        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 0.75f);
     }
 
     public void StartGame() => SceneManager.LoadScene(1);

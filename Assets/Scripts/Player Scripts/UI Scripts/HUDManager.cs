@@ -32,7 +32,7 @@ public class HUDManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape)) ToggleSettings();
     }
 
-    private void ToggleSettings()
+    public void ToggleSettings()
     {
         if(settingsPanel.activeSelf)
         {

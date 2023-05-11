@@ -36,6 +36,8 @@ public class FlingController : MonoBehaviour
     private const string Kinematics = "Kinematics";
     private int totalNumFlings = 0;
     private Vector3 forceDirection;
+
+    private bool wasPaused = false;
     
     private void Awake()
     {
@@ -60,7 +62,24 @@ public class FlingController : MonoBehaviour
         _isMoving = rb.velocity.magnitude > stopVelocity;
 
         //stop everything once the game is over
-        if(_isGameOver || HUDManager.Instance.IsPaused) return;
+        if(_isGameOver) return;
+
+        if(HUDManager.Instance.IsPaused)
+        {
+            if(!wasPaused)
+            {
+                wasPaused = true;
+                _isDragging = false;
+                lineRenderer.positionCount = 0;
+                forceDirection = Vector3.zero;
+            }
+            return;
+        }
+        else if(wasPaused)
+        {
+            wasPaused = false;
+            return;
+        }
 
         if(!CanFling) return;
         
