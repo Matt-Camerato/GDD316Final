@@ -5,20 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
-    public void StartGame()
-    {
-        SceneManager.LoadScene(1);
-    }
+    private Animator anim;
 
-    public void Settings()
-    {
+    private void Start() => anim = GetComponent<Animator>();
 
-    }
+    public void StartGame() => SceneManager.LoadScene(1);
 
-    public void Return()
-    {
-
-    }
+    public void Settings() => anim.SetTrigger("Settings");
+    public void Return() => anim.SetTrigger("Return");
 
     public void InteractSFX() => AudioManager.Instance.InteractSFX();
 }
