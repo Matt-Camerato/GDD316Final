@@ -9,6 +9,12 @@ public class AddFling : Pickup
     [SerializeField] private TMP_Text flingNumText;
 
     private void Start() => flingNumText.text = "+" + amountOfFlingsToAdd;
+
+    public void SetFlings(int flings)
+    {
+        amountOfFlingsToAdd = flings;
+        flingNumText.text = "+" + flings;
+    }
     
     protected override void OnPickUp(PickupManager playerController)
     {
