@@ -12,6 +12,8 @@ public class FlingController : MonoBehaviour
     [SerializeField] private float forceMultiplier = 10f;
     [SerializeField] private float maxForce = 50f;
     [SerializeField] private float stopVelocity = 0.02f;
+    [SerializeField] private float horizontalCoefficient = 0.5f;
+    [SerializeField] private float verticalCoefficient = 4;
     [SerializeField] private int segments = 20;
     [SerializeField] private int numFlings = 5;
 
@@ -33,7 +35,8 @@ public class FlingController : MonoBehaviour
     public const string Gravity = "Gravity";
     private const string Kinematics = "Kinematics";
     private int totalNumFlings = 0;
-
+    private Vector3 forceDirection;
+    
     private void Awake()
     {
         _rigidbodies = GetComponentsInChildren<Rigidbody>();
@@ -55,7 +58,7 @@ public class FlingController : MonoBehaviour
     private void Update()
     {
         _isMoving = rb.velocity.magnitude > stopVelocity;
-        
+
         //stop everything once the game is over
         if(_isGameOver) return;
 
@@ -73,7 +76,6 @@ public class FlingController : MonoBehaviour
             _isDragging = true;
         }
 
-        var forceDirection = Vector3.zero;
         
         if (_isDragging)
         {
@@ -87,7 +89,7 @@ public class FlingController : MonoBehaviour
             {
                 var t = (float)i / (float)segments;
                 arcPoints[i] = Vector3.Lerp(_startPosition, _endPosition, t) + CalculateArcPoint(t); 
-                forceDirection = arcPoints[i];
+                forceDirection = arcPoints[10] - arcPoints[0];
             }
 
             lineRenderer.positionCount = arcPoints.Length;
@@ -99,7 +101,8 @@ public class FlingController : MonoBehaviour
         _isDragging = false;
         StartCoroutine(HasLaunched());
         //calculate direction and distance of fling
-        
+        // forceDirection = lineRenderer.GetPosition(lineRenderer.positionCount - 1);
+
         var distance = forceDirection.magnitude;
         forceDirection.Normalize();
 
@@ -117,6 +120,11 @@ public class FlingController : MonoBehaviour
         totalNumFlings++;
         HUDManager.Instance.UpdateFlingCount(numFlings);
     }
+
+    /*private Vector3[] ArcPoints()
+    {
+        return 
+    }*/
 
     private void LateUpdate()
     {
@@ -143,9 +151,9 @@ public class FlingController : MonoBehaviour
 
         //calculate the position of the arc point using a quadratic equation
         var result = Vector3.zero;
-        result.y = arcHeight * 4f * t * (1f - t);
-        result.x = arcHeight * (_endPosition.x - _startPosition.x) * t;
-        result.z = arcHeight * (_endPosition.z - _startPosition.z) * t;
+        result.y = arcHeight * verticalCoefficient * t * (1f - t);
+        result.x = arcHeight * (_endPosition.x - _startPosition.x) * horizontalCoefficient * t;
+        result.z = arcHeight * (_endPosition.z - _startPosition.z) * horizontalCoefficient * t;
         return result;
     }
 
